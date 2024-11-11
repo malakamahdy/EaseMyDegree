@@ -2,6 +2,8 @@
 
 # Developer's Guide
 
+Chantey
+
 Getting Started:
 
 React:
