@@ -1,6 +1,6 @@
 # EaseMyDegree
 
-# jen was here
+# jen was here hey jen i love you
 
 # Developer's Guide
 
