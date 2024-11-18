@@ -1,5 +1,3 @@
-/* src/Login.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Garet&display=swap');
 
 * {
@@ -8,18 +6,22 @@
   padding: 0;
 }
 
-body {
+html, body {
+  height: 100%; /* Ensures the body fills the viewport height */
+  width: 100%; /* Ensures the body fills the viewport width */
   font-family: 'Garet', sans-serif;
   background-color: #fefcf8;
+  overflow: hidden; /* Prevents any unintended scrollbars */
 }
 
 .login-page {
   display: flex;
-  height: 100vh;
+  height: 100vh; /* Fills the entire height of the viewport */
+  width: 100vw; /* Ensures it fills the full width of the viewport */
 }
 
 .left-side {
-  background-color: #fdf4e7;
+  background-color: #fefcf8; /* Set background color of the left side */
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -30,14 +32,19 @@ body {
 }
 
 .logo {
-  width: 150px;
-  margin-bottom: 20px;
+  width: 100%; /* Allow the logo to scale with the container */
+  max-width: 400px; /* Set a max width to prevent it from being too large */
+  transform-origin: center; /* Ensure it scales from the center */
+  margin-bottom: 20px; /* Adjust bottom margin */
 }
+
 
 .tagline {
   color: #feb7a3;
   font-size: 1.5em;
+  font-weight: bold;  /* Added to make the text bold */
 }
+
 
 .right-side {
   background-color: #a1bdbc;
@@ -48,12 +55,6 @@ body {
   justify-content: center;
   padding: 40px;
   border-radius: 20px;
-}
-
-h2 {
-  color: #feb7a3;
-  font-size: 2.5em;
-  margin-bottom: 30px;
 }
 
 form {
@@ -67,9 +68,10 @@ form {
 label {
   color: black;
   font-weight: bold;
-  font-size: 1em;
-  margin-bottom: 5px;
+  font-size: 1.2em; /* Increased font size for labels */
+  margin-bottom: 10px; /* Slightly larger space between label and input */
 }
+
 
 input {
   padding: 10px;
@@ -79,6 +81,22 @@ input {
   font-size: 1em;
 }
 
+input {
+  padding: 15px; /* Larger padding for a better feel */
+  background-color: #fdf4e7; /* Light beige color for input fields */
+  border: none; /* Remove default border */
+  border-radius: 50px; /* Make the input field oval */
+  font-size: 1.2em; /* Larger text for better readability */
+  color: black; /* Black text color for better contrast */
+  outline: none; /* Removes the default blue border on focus */
+}
+
+input:focus {
+  outline: 2px solid #feb7a3; /* Add an accent color outline on focus */
+}
+
+
+
 .forgot-password {
   color: black;
   font-size: 0.9em;
@@ -87,18 +105,20 @@ input {
 }
 
 button {
-  padding: 12px;
+  padding: 15px;
   background-color: #feb7a3;
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 1.1em;
+  border-radius: 8px; /* Rounded corners for the button */
+  font-size: 1.2em; /* Larger button text */
+  font-weight: bold; /* Make the button text bold */
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #f09a86;
+  background-color: #f09a86; /* Hover effect */
 }
+
 
 .create-account {
   color: black;
@@ -112,4 +132,62 @@ button:hover {
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.login-rectangle {
+  background-color: #fefcf8; /* Rectangle color */
+  padding: 40px; /* Reduced padding to make the rectangle less tall */
+  border-radius: 20px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Full width */
+  max-width: 500px; /* Max width of the rectangle */
+  margin: 0 auto; /* Centers it horizontally */
+  transform: scale(1.2); /* Scales up the rectangle and its content */
+  transition: transform 0.3s ease; /* Smooth scaling animation */
+  max-height: 550px; 
+}
+
+/* Optional hover effect for interactivity */
+.login-rectangle:hover {
+  transform: scale(1.25); /* Slightly increase size on hover */
+}
+
+h2 {
+  color: #feb7a3;
+  font-size: 3em;
+  font-weight: bold;  /* Added font-weight to make it bold */
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+
+.create-account {
+  font-size: 1.1em;
+  margin-top: 10px; /* Shift "Don't have an account?" upward */
+  margin-bottom: 20px; /* Optional: Adjust bottom space as needed */
+}
+
+
+form {
+  width: 100%;
+  max-width: 350px; /* Scales with the rectangle */
+  gap: 25px; /* Increased gap between fields */
+}
+
+input {
+  padding: 15px; /* Larger input fields */
+  font-size: 1.2em; /* Bigger text inside inputs */
+}
+
+button {
+  padding: 15px;
+  font-size: 1.2em; /* Larger button text */
+}
+
+.create-account {
+  font-size: 1.1em; /* Slightly larger text */
 }

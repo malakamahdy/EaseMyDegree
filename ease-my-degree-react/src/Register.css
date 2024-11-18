@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Garet&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%; /* Ensures the body fills the viewport height */
+  width: 100%; /* Ensures the body fills the viewport width */
+  font-family: 'Garet', sans-serif;
+  background-color: #fefcf8;
+  overflow: hidden; /* Prevents any unintended scrollbars */
+}
+
+.register-page {
+  display: flex;
+  height: 100vh; /* Fills the entire height of the viewport */
+  width: 100vw; /* Ensures it fills the full width of the viewport */
+}
+
+.left-side {
+  background-color: #fefcf8; /* Set background color of the left side */
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.logo {
+  width: 100%; /* Allow the logo to scale with the container */
+  max-width: 400px; /* Set a max width to prevent it from being too large */
+  transform-origin: center; /* Ensure it scales from the center */
+  margin-bottom: 20px; /* Adjust bottom margin */
+}
+
+.tagline {
+  color: #feb7a3;
+  font-size: 1.5em;
+  font-weight: bold;  /* Make tagline bold */
+}
+
+.right-side {
+  background-color: #a1bdbc;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.register-rectangle {
+  background-color: #fefcf8;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+  max-height: 600px; /* Adjusted max height */
+}
+
+.register-rectangle:hover {
+  transform: scale(1.25);
+}
+
+h2 {
+  color: #feb7a3;
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+form {
+  width: 100%;
+  max-width: 350px;
+  gap: 25px;
+}
+
+label {
+  color: black;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+input {
+  padding: 15px;
+  font-size: 1.2em;
+  background-color: #fdf4e7;
+  border: none;
+  border-radius: 50px;
+  color: black;
+  outline: none;
+}
+
+input:focus {
+  outline: 2px solid #feb7a3;
+}
+
+button {
+  padding: 15px;
+  background-color: #feb7a3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #f09a86;
+}
+
+.error {
+  color: red;
+  font-size: 1em;
+  text-align: center;
+}
+
+.login-link {
+  color: black;
+  font-size: 1em;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.login-link span {
+  color: #feb7a3;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
