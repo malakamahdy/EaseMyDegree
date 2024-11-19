@@ -1,17 +1,5 @@
 # EaseMyDegree
 
-# jen was here hey jen i love you
-
-# Developer's Guide
-
-HEAD
-Kibo Heavenly
-
-Chantey 
-
-# chantey i am in love with you - malak
-
- de83cfafa5ba3e95813d5e06930b4742d247908b
 Getting Started:
 
 React:
