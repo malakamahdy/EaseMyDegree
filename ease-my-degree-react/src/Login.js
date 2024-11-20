@@ -2,35 +2,40 @@
 
 import React, { useState } from 'react';
 import './Login.css';
+import { getUserByEmail } from './userStore'; // Import the function
+import { useNavigate } from 'react-router-dom';
 import logo from './assets/logo.png'; // Assuming you are using the same logo as the login page
-import axios from 'axios'; // Import axios for making HTTP requests
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = async (event) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    try {
-      const response = await axios.post('http://localhost:5000/login', { email, password });
-      
-      // Store the JWT token in localStorage (or use cookies for more security)
-      localStorage.setItem('token', response.data.token);
+    // Check if the email exists
+    const user = getUserByEmail(email);
 
-      // Redirect to another page (e.g., dashboard)
-      window.location.href = '/dashboard';  // Adjust the redirect as needed
-    } catch (error) {
-      setErrorMessage(error.response ? error.response.data.message : 'An error occurred');
+    // Check if user is found and the password matches
+    if (!user || user.password !== password) {
+      setErrorMessage('Invalid email or password');
+      return;
     }
+
+    // Store the user data in localStorage for use on the dashboard
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
+
+    // Redirect to the dashboard page after successful login
+    navigate('/dashboard');
   };
 
   return (
     <div className="login-page">
       <div className="left-side">
-        <img src={logo} alt="Ease My Degree Logo" className="logo" />
+      <img src={logo} alt="Ease My Degree Logo" className="logo" />
         <p className="tagline">The future of academic planning.</p>
       </div>
       <div className="right-side">
@@ -53,10 +58,10 @@ function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            {errorMessage && <p className="error">{errorMessage}</p>} {/* Show error message if any */}
+            {errorMessage && <p className="error">{errorMessage}</p>}
             <button type="submit">Login</button>
             <p className="create-account">
-              Don’t have an account? <Link to="/register"><span>Create your account</span></Link>
+              Don’t have an account? <span onClick={() => navigate('/register')}>Create your account</span>
             </p>
           </form>
         </div>
