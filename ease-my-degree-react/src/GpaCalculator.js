@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Calculator.css";
+import "./GpaCalculator.css";
 
 const GpaCalculator = () => {
   const [courses, setCourses] = useState([]);
