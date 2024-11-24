@@ -4,8 +4,9 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
-import Dashboard from './Dashboard';  // Create this component as a placeholder for the landing page
-import GpaCalculator from "./GpaCalculator";
+import Dashboard from './Dashboard';
+import GpaCalculator from './GpaCalculator';
+import SemesterPlanner from './SemesterPlanner'; // Import SemesterPlanner component
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/calculator" element={<GpaCalculator />} />
+        <Route path="/semesterplanner" element={<SemesterPlanner />} />
       </Routes>
     </Router>
   );
