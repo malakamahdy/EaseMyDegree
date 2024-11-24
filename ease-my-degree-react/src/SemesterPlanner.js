@@ -32,7 +32,7 @@ function SemesterPlanner() {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-3.5-turbo",  // Ensure you're using the correct model name
+          model: "gpt-4",  // Ensure you're using the correct model name
           messages: [{ role: "user", content: studentInput }],
           max_tokens: 150,  // Set the response length limit
         },
