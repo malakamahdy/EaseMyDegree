@@ -3,7 +3,6 @@ import "./SemesterPlanner.css";
 import axios from "axios";
 
 function SemesterPlanner() {
-
   console.log(process.env); // Logs all environment variables
 
   const [messages, setMessages] = useState([]);
@@ -32,18 +31,21 @@ function SemesterPlanner() {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-4",  // Ensure you're using the correct model name
+          "model": "gpt-4", // Ensure you're using the correct model name
           messages: [{ role: "user", content: studentInput }],
-          max_tokens: 150,  // Set the response length limit
+          max_tokens: 150, // Set the response length limit
         },
         {
           headers: {
-            Authorization: `Bearer ${openaiApiKey}`,  // Pass API key in Authorization header
-            "Content-Type": "application/json",  // Content-Type for JSON request
+            Authorization: `Bearer ${openaiApiKey}`, // Pass API key in Authorization header
+            "Content-Type": "application/json", // Content-Type for JSON request
           },
-          timeout: 10000,  // Optional: Set timeout to 10 seconds
+          timeout: 10000, // Optional: Set timeout to 10 seconds
         }
       );
+
+      // Log the model used in the API response
+      console.log("Model used:", response.data.model);
 
       const chatGptResponse = {
         sender: "planner",
