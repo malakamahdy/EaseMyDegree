@@ -1,14 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser');  // Import the CSV parser
 require('dotenv').config();
-
-const apiKey = process.env.API_KEY;  // Now you can access the API key securely
 
 const app = express();
 const port = process.env.PORT || 5001;
@@ -36,6 +32,20 @@ const readCsvFile = (filePath) => {
       .on('data', (data) => results.push(data))
       .on('end', () => resolve(results))
       .on('error', (error) => reject(error));
+  });
+};
+
+// Function to write updated course data back to CSV
+const writeCsvFile = (filePath, data) => {
+  const header = 'Course,Course Number,Credits,Prerequisite,Credit Received,Grade\n';
+  const rows = data.map((course) =>
+    `${course.courseName},${course.courseNumber},${course.credits},${course.prerequisite},${course.creditReceived},${course.grade}\n`
+  );
+  const csvContent = header + rows.join('');
+
+  fs.writeFile(filePath, csvContent, 'utf8', (err) => {
+    if (err) throw err;
+    console.log('CSV file successfully updated!');
   });
 };
 
@@ -102,31 +112,24 @@ app.get('/api/degree-plans', authenticateToken, async (req, res) => {
   }
 });
 
-// Fetch user info
-app.get('/api/users/:id', authenticateToken, (req, res) => {
-  const userId = parseInt(req.params.id, 10);
-  const user = users.find((u) => u.id === userId);
+// Endpoint to handle saving user course updates
+app.post('/api/update-courses', authenticateToken, (req, res) => {
+  const { school, major, updatedCourses } = req.body;
 
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+  // Construct the file path for the correct CSV template (based on school and major)
+  const filePath = path.join(__dirname, 'data', `${school}_${major}_degree_plan.csv`);
+
+  // Write the updated courses to the CSV file
+  try {
+    writeCsvFile(filePath, updatedCourses);
+    res.status(200).json({ message: 'Courses updated successfully!' });
+  } catch (error) {
+    console.error('Error updating courses:', error);
+    res.status(500).json({ message: 'Error updating courses', error });
   }
-
-  res.json({ id: user.id, email: user.email, graduationDate: user.graduationDate, preferences: user.preferences });
 });
 
-// Save user preferences
-app.post('/api/users/:id/preferences', authenticateToken, (req, res) => {
-  const userId = parseInt(req.params.id, 10);
-  const user = users.find((u) => u.id === userId);
-
-  if (!user) {
-    return res.status(404).json({ message: 'User not found' });
-  }
-
-  user.preferences = req.body; // Save preferences (replace with database logic in production)
-  res.json({ message: 'Preferences saved', preferences: user.preferences });
-});
-
+// Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
