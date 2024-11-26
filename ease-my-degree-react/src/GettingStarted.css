@@ -1,0 +1,60 @@
+/* Background */
+.getting-started-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #a1bdbc; /* Teal */
+  font-family: Arial, sans-serif;
+}
+
+/* Rectangle Styling */
+.rectangle {
+  background-color: #fefcf8; /* Rectangle Background */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 350px;
+}
+
+/* Title */
+.title {
+  color: #feb7a3; /* Pink */
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Dropdown Label */
+.dropdown-label {
+  font-size: 16px;
+  color: #333; /* Neutral Text Color */
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Dropdown Styling */
+.dropdown {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 20px; /* Rounded */
+  margin-bottom: 16px;
+  font-size: 14px;
+  background-color: #fdf4e7; /* Light pastel text field color */
+}
+
+/* Submit Button */
+.submit-button {
+  background-color: #feb7a3; /* Pink */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px; /* Rounded */
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background-color: #fd9a8a; /* Darker pink on hover */
+}
