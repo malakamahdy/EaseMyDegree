@@ -14,40 +14,50 @@ function GettingStarted() {
   const fetchCourses = async (school, major) => {
     try {
       setLoading(true);
-      const response = await axios.get(`/templates/${school}_${major}.csv`);
+      const filePath = `/data/${school}_${major}.csv`;
+      console.log("Fetching file from:", filePath); // Debug log for file path
+
+      const response = await axios.get(filePath);
       const parsedCourses = parseCSV(response.data);
       setCourses(parsedCourses);
       setResponses(new Array(parsedCourses.length).fill({ creditReceived: "", grade: "N/A" }));
     } catch (error) {
       console.error("Error fetching courses:", error);
+      alert("Unable to load course data. Please check your selection and try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const parseCSV = (csvData) => {
-    const rows = csvData.split("\n");
-    const parsed = rows.map((row) => {
-      const cols = row.split(",");
+    const rows = csvData.split("\n").filter((row) => row.trim() !== ""); // Remove empty rows
+    return rows.map((row) => {
+      const cols = row.split(",").map((col) => col.trim()); // Trim columns
       return {
-        courseName: cols[0],
-        courseNumber: cols[1],
-        credits: cols[2],
-        prerequisite: cols[3],
+        courseName: cols[0] || "N/A",
+        courseNumber: cols[1] || "N/A",
+        credits: cols[2] || "0",
+        prerequisite: cols[3] || "None",
         creditReceived: "",
         grade: "N/A",
       };
     });
-    return parsed;
   };
 
   const handleSchoolChange = (event) => {
     setSchool(event.target.value);
   };
 
-  const handleMajorChange = (event) => {
-    setMajor(event.target.value);
-    fetchCourses(school, event.target.value); // fetch courses when major is selected
+  const handleMajorChange = async (event) => {
+    const selectedMajor = event.target.value;
+    setMajor(selectedMajor);
+
+    if (school) {
+      await fetchCourses(school, selectedMajor); // Ensure both school and major are valid
+    } else {
+      console.error("Please select a school before selecting a major.");
+      alert("Please select a school first.");
+    }
   };
 
   const handleCreditReceivedChange = (index, value) => {
@@ -92,6 +102,7 @@ function GettingStarted() {
       <div className="form">
         <label htmlFor="school">Select your school:</label>
         <select id="school" value={school} onChange={handleSchoolChange}>
+          <option value="">Select</option>
           <option value="TAMU-CC">TAMU-CC</option>
           <option value="UT">UT</option>
           <option value="TexasState">Texas State</option>
@@ -99,6 +110,7 @@ function GettingStarted() {
 
         <label htmlFor="major">Select your major:</label>
         <select id="major" value={major} onChange={handleMajorChange}>
+          <option value="">Select</option>
           <option value="ComputerScience">Computer Science</option>
           <option value="Psychology">Psychology</option>
           <option value="Biology">Biology</option>
