@@ -28,7 +28,7 @@ function Dashboard() {
     navigate("/calculator");
   };
   const handleGoToSuggestions = () => {
-    navigate("/calculator");
+    navigate("/SemesterPlanner");
   };
 
   return (
