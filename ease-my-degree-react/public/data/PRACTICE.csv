@@ -1,0 +1,5 @@
+CourseName,CourseNumber,Credits,Prerequisite
+Intro to Programming,CS101,3,N/A
+Data Structures,CS201,4,CS101
+Algorithms,CS301,3,CS201
+Operating Systems,CS302,4,CS201
