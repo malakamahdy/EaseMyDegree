@@ -1,0 +1,32 @@
+CourseName,CourseNumber,Credits,Prerequisite
+First Year Seminar I,UNIV1101,1,N/A
+Skills for Computing Professionals I,COSC3100,1,Co-Requisite COSC1435
+Problem Solving with Comp I,COSC1435,4,MATH1314 or MATH2312 or MATH1316 or MATH2413
+Calculus I,MATH2413,4,Grade of C or better in MATH1316 or MATH2312
+Communication Requirement,UNIV.CORE,3,Refer to Degree Planner
+Social and Behavioral Sciences,UNIV.CORE,3,Refer to Degree Planner
+First Year Seminar II,UNIV1102,1,N/A
+Problem Solving with Comp II,COSC1436,4,Grade of C or better in COSC1435
+Discrete Mathematics,MATH2305,3,MATH2305
+Game Design,COSC2325,3,N/A
+Cyber Security,COSC3301,3,COSC1435
+Communication Requirement,UNIV.CORE,3,Refer to Degree Planner
+Computer Architecture,COSC2334,3,COSC1435 and MATH2305
+Data Structures,COSC2437,4,Grade of C or better in COSC1436 and MATH2305 or Co-Requisite MATH2305
+University Physics I,PHYS2425,4,MATH2413
+Calculus II,MATH2414,4,Grade of C or better in MATH2413
+University Physics II,PHYS2426,4,PHYS2425 and MATH2414
+Linear Algebra,MATH3311,3,Grade of C or better in MATH2413
+Game Programming,COSC3325,3,COSC2437
+Introduction to Database Systems,COSC3336,3,COSC2437
+"Language, Philosophy and Culture",UNIV.CORE,3,Refer to Degree Planner
+Object-Oriented Programming,COSC3324,3,COSC2437
+Operating Systems,COSC3346,3,COSC2437 and COSC2334
+Numerical Methods,COSC3385,3,MATH2413 and COSC1435
+Computer Graphics,COSC4328,3,COSC2437 and MATH2413
+US Government and Politics,POLS2305,3,N/A
+Upper Math Stats,COSC3324,3,"MATH2413, MATH2413 and COSC1435"
+Software Engineering,COSC3346,3,COSC2437
+Computer Networks,COSC3385,3,COSC2437 and MATH2413
+Advanced Game Programming,COSC4328,3,COSC3325
+Technical and Professional Writing for COSC,POLS2305,3,N/A

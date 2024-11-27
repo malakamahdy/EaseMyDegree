@@ -1,0 +1,31 @@
+CourseName,CourseNumber,Credits,Prerequisite
+University Seminar I,UNIV 1101,1,N/A
+University Seminar II,UNIV 1102,1,N/A
+Biology I,BIOL 1406,4,Included in University Core
+Biology II,BIOL 1407,4,Included in University Core
+Calculus I,MATH 2413,4,N/A
+General Chemistry I,CHEM 1411,4,Included in University Core
+Science Communication,BIOL 2300,3,N/A
+Genetics,BIOL 2416,4,N/A
+Microbiology,BIOL 2421,4,N/A
+Principles of Evolution,BIOL 2371,3,N/A
+Principles of Ecology,BIOL 3428,4,N/A
+General Chemistry II,CHEM 1412,4,N/A
+Organic Chemistry I,CHEM 3411,4,N/A
+Organic Chemistry II,CHEM 3412,4,N/A
+Biostatistics,BIOL 3325,3,N/A
+Applied Probability and Statistics,MATH 3342,3,N/A
+Molecular Biology,BIOL 3403,4,Biology Core
+Cell Biology,BIOL 3410,4,Biology Core
+Biochemistry I,CHEM 4401,4,N/A
+Comparative Vertebrate Anatomy,BIOL 3425,4,N/A
+Physiology,BIOL 3430,4,N/A
+Plant Form and Function,BIOL 3455,4,N/A
+Principles of Botany,BIOL 2472,4,N/A
+Invertebrate Zoology,BIOL 3413,4,N/A
+Vertebrate Zoology,BIOL 3414,4,N/A
+Immunology,BIOL 4406,3,N/A
+Medical Microbiology,BIMS 4374,3,N/A
+Biochemistry II,CHEM 4402,4,N/A
+General Physics I and II,PHYS 1401 & PHYS 1402,8,Select one sequence
+University Physics I and II,PHYS 2425 & PHYS 2426,8,Select one sequence
