@@ -1,34 +1,40 @@
 CourseName,CourseNumber,Credits,Prerequisite
 University Seminar I,UNIV 1101,1,N/A
-University Seminar II,UNIV 1102,1,N/A
 General Psychology,PSYC 2301,3,N/A
+Writing and Rhetoric I,ENGL 1301,3,N/A
+U.S. History to 1865,HIST 1301,3,N/A
+Creative Arts Core Requirement,N/A,3,N/A
+University Seminar II,UNIV 1102,1,UNIV 1101
+Introduction to Sociology or Economics,"SOCI 1301, ECON 1301, ECON 2301, ECON 2302",3,N/A
+Writing and Rhetoric II,"ENGL 1302, COMM 1311",3,ENGL 1301
+U.S. History Since 1865,HIST 1302,3,N/A
+Statistics for Life,MATH 1442,4,N/A
+"Language, Philosophy & Culture Core",N/A,3,N/A
+Foreign Language I,N/A,3,N/A
+U.S. Government and Politics,POLS 2305,3,N/A
+Life & Physical Science Core,N/A,4,N/A
+Core Component I,N/A,3,N/A
+State and Local Government,POLS 2306,3,N/A
+Core Component II,N/A,3,N/A
+Foreign Language II,N/A,3,N/A
+Abnormal Psychology,PSYC 3363,3,PSYC 3361
 Experimental Psychology,PSYC 3411,4,PSYC 2301
-Psychology Capstone Seminar,PSYC 4310,3,PSYC 3411
-Lifespan Developmental Psychology,PSYC 2314,3,N/A
-Social Psychology,PSYC 2319,3,N/A
-Psychology of Personality,PSYC 3361,3,N/A
-Abnormal Psychology,PSYC 3363,3,N/A
-Cognitive Psychology,PSYC 3342,3,N/A
-Learning and Behavior,PSYC 3343,3,N/A
-Physiological Psychology,PSYC 4352,3,N/A
-Sensation and Perception,PSYC 4354,3,N/A
-Topics in Psychology,PSYC 2390,3,N/A
+Lifespan Development,PSYC 2314,3,PSYC 2301
+Social Psychology,PSYC 2319,3,PSYC 2301
 Close Relationships,PSYC 3325,3,N/A
 Forensic Psychology,PSYC 3335,3,N/A
-Psychology of Language,PSYC 3346,3,N/A
-Evolutionary Psychology,PSYC 3350,3,N/A
+Learning and Behavior,PSYC 3343,3,PSYC 2301
 Health Psychology,PSYC 3360,3,N/A
-Psychology of Religion,PSYC 3370,3,N/A
-Human Sexuality,PSYC 3374,3,N/A
-Introduction to Clinical Psychology,PSYC 3375,3,N/A
-History and Systems of Psychology,PSYC 4309,3,N/A
-Cross-cultural Psychology,PSYC 4332,3,N/A
-Drug Use and Abuse,PSYC 4334,3,N/A
-Positive Psychology,PSYC 4350,3,N/A
+Psychology of Language,PSYC 3346,3,N/A
+Forensic Psychology,PSYC 3335,3,N/A
+Positive Psychology,PSYC 4350,3,PSYC 2301
+Sensation and Perception,PSYC 4354,3,PSYC 2301
+Psychological Testing,PSYC 4372,3,MATH 1442
 Gender Issues in Psychology,PSYC 4367,3,N/A
-Feminism & Science,PSYC 4370,3,N/A
-Psychological Testing,PSYC 4372,3,N/A
-Industrial/Organizational Psychology,PSYC 4377,3,N/A
-Undergraduate Research,PSYC 4395,3,N/A
+Drug Use and Abuse,PSYC 4344,3,N/A
+Industrial/Organizational Psychology,PSYC 4377,3,PSYC 2301
+Psychology Capstone Seminar,PSYC 4310,3,PSYC 3411
+Introduction to Clinical Psychology,PSYC 3375,3,PSYC 2301
+Psychology of Religion,PSYC 3370,3,N/A
+History and Systems of Psychology,PSYC 4309,3,PSYC 2301
 Directed Individual Study,PSYC 4396,3,N/A
-Applied Experience,PSYC 4398,3,N/A
