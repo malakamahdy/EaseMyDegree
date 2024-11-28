@@ -13,7 +13,22 @@ export const getUserByEmail = (email) => {
   return users.find(user => user.email === email);
 };
 
+// Get user by username
+export const getUserByUsername = (username) => {
+  return users.find(user => user.username === username);
+};
+
 // Get all users (for testing or debugging)
 export const getAllUsers = () => {
   return users;
+};
+
+// Update user's course data
+export const updateUserCourses = (username, updatedCourses) => {
+  const user = getUserByUsername(username);
+  if (user) {
+    user.courses = updatedCourses;
+  } else {
+    throw new Error('User not found');
+  }
 };

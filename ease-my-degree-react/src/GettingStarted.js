@@ -9,6 +9,17 @@ function GettingStarted() {
   const [responses, setResponses] = useState([]);
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState(""); // Username will be fetched automatically
+
+  // Fetch the username automatically (e.g., from localStorage, context, or authentication)
+  useEffect(() => {
+    const user = localStorage.getItem("username"); // Assume the username is stored in localStorage after login
+    if (user) {
+      setUsername(user);
+    } else {
+      console.error("Username not found. User may not be logged in.");
+    }
+  }, []);
 
   // Fetch courses based on school and major selection
   const fetchCourses = async (school, major) => {
@@ -20,7 +31,7 @@ function GettingStarted() {
       const response = await axios.get(filePath);
       const parsedCourses = parseCSV(response.data);
       setCourses(parsedCourses);
-      setResponses(new Array(parsedCourses.length).fill({ creditReceived: "", grade: "N/A" }));
+      setResponses(new Array(parsedCourses.length).fill({ creditReceived: "No", grade: "N/A" })); // Default to "No"
     } catch (error) {
       console.error("Error fetching courses:", error);
       alert("Unable to load course data. Please check your selection and try again.");
@@ -36,9 +47,9 @@ function GettingStarted() {
       return {
         courseName: cols[0] || "N/A",
         courseNumber: cols[1] || "N/A",
-        credits: cols[2] || "0",
+        credits: cols[2] || "0", // Not displayed in the table
         prerequisite: cols[3] || "None",
-        creditReceived: "",
+        creditReceived: "No", // Default value
         grade: "N/A",
       };
     });
@@ -78,20 +89,25 @@ function GettingStarted() {
       creditReceived: responses[index]?.creditReceived || "No",
       grade: grades[index] || "N/A",
     }));
-
-    // Send the updated courses to backend
+  
+    // Send the updated courses to the backend
     try {
-      await axios.post("http://localhost:5001/api/update-courses", {
-        school,
-        major,
-        updatedCourses,
-      });
+      const token = localStorage.getItem("token"); // Assuming token is stored here
+      const headers = { Authorization: `Bearer ${token}` };
+  
+      await axios.post(
+        "http://localhost:5001/api/update-courses",
+        { username, updatedCourses },
+        { headers }
+      );
+  
       alert("Your course data has been updated successfully!");
     } catch (error) {
       console.error("Error updating courses:", error);
       alert("Failed to update course data.");
     }
   };
+  
 
   return (
     <div className="getting-started">
@@ -128,8 +144,6 @@ function GettingStarted() {
                 <thead>
                   <tr>
                     <th>Course</th>
-                    <th>Credits</th>
-                    <th>Prerequisite</th>
                     <th>Credit Received</th>
                     <th>Grade</th>
                   </tr>
@@ -138,16 +152,13 @@ function GettingStarted() {
                   {courses.map((course, index) => (
                     <tr key={index}>
                       <td>{course.courseName}</td>
-                      <td>{course.credits}</td>
-                      <td>{course.prerequisite}</td>
                       <td>
                         <select
-                          value={responses[index]?.creditReceived || ""}
+                          value={responses[index]?.creditReceived || "No"}
                           onChange={(e) => handleCreditReceivedChange(index, e.target.value)}
                         >
-                          <option value="">Select</option>
-                          <option value="Yes">Yes</option>
                           <option value="No">No</option>
+                          <option value="Yes">Yes</option>
                         </select>
                       </td>
                       <td>
@@ -161,7 +172,6 @@ function GettingStarted() {
                             <option value="B">B</option>
                             <option value="C">C</option>
                             <option value="D">D</option>
-                            <option value="F">F</option>
                           </select>
                         ) : (
                           <span>No Grade</span>
@@ -181,3 +191,5 @@ function GettingStarted() {
 }
 
 export default GettingStarted;
+
+
