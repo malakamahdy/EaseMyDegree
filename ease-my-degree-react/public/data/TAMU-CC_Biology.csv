@@ -1,31 +1,38 @@
 CourseName,CourseNumber,Credits,Prerequisite
 University Seminar I,UNIV 1101,1,N/A
-University Seminar II,UNIV 1102,1,N/A
-Biology I,BIOL 1406,4,Included in University Core
-Biology II,BIOL 1407,4,Included in University Core
-Calculus I,MATH 2413,4,N/A
-General Chemistry I,CHEM 1411,4,Included in University Core
-Science Communication,BIOL 2300,3,N/A
-Genetics,BIOL 2416,4,N/A
-Microbiology,BIOL 2421,4,N/A
+Biology I,BIOL 1406,4,N/A
+General Chemistry I,CHEM 1411,4,N/A
+Writing and Rhetoric I,ENGL 1301,3,N/A
+University Core Curriculum,BIOL 5001,3,N/A
+University Seminar II,UNIV 1102,1,UNIV 1101
+Biology II,BIOL 1407,4,BIOL 1406
+General Chemistry II,CHEM 1412,4,CHEM 1411
+Writing and Rhetoric II,ENGL 1302,3,ENGL 1301
+University Core Curriculum,BIOL 5002,3,N/A
+Organic Chemistry I,CHEM 3411,4,CHEM 1412
+Microbiology,BIOL 2421,4,BIOL 1407
+Physics for Life Sciences I,PHYS 1401,4,N/A
+University Core Curriculum,BIOL 5003,3,N/A
+Organic Chemistry II,CHEM 3412,4,CHEM 3411
+Genetics,BIOL 2416,4,BIOL 1407
+Physics for Life Sciences II,PHYS 1402,4,PHYS 1401
+University Core Curriculum,BIOL 5004,3,N/A
+Molecular Biology,BIOL 3403,4,BIOL 1407
 Principles of Evolution,BIOL 2371,3,N/A
 Principles of Ecology,BIOL 3428,4,N/A
-General Chemistry II,CHEM 1412,4,N/A
-Organic Chemistry I,CHEM 3411,4,N/A
-Organic Chemistry II,CHEM 3412,4,N/A
+University Core Curriculum,BIOL 5005,3,N/A
+Immunology,BIOL 4406,4,BIOL 3403
+Medical Microbiology,BIMS 4374,3,BIOL 2421
+Upper-Division Biology Elective,BIOL 5006,3,N/A
+Advanced Microbiology,BIOL 4461,4,BIOL 2421
+Biochemistry I,CHEM 4401,4,CHEM 3412
+Upper-Division Biology Elective,BIOL 5007,3,N/A
+Capstone Seminar in Biology,BIOL 4101,1,N/A
+Virology,BIOL 4430,4,BIOL 3403
+Biochemistry II,CHEM 4402,4,CHEM 4401
+Upper-Division Biology Elective,BIOL 5008,3,N/A
 Biostatistics,BIOL 3325,3,N/A
 Applied Probability and Statistics,MATH 3342,3,N/A
-Molecular Biology,BIOL 3403,4,Biology Core
-Cell Biology,BIOL 3410,4,Biology Core
-Biochemistry I,CHEM 4401,4,N/A
 Comparative Vertebrate Anatomy,BIOL 3425,4,N/A
 Physiology,BIOL 3430,4,N/A
-Plant Form and Function,BIOL 3455,4,N/A
 Principles of Botany,BIOL 2472,4,N/A
-Invertebrate Zoology,BIOL 3413,4,N/A
-Vertebrate Zoology,BIOL 3414,4,N/A
-Immunology,BIOL 4406,3,N/A
-Medical Microbiology,BIMS 4374,3,N/A
-Biochemistry II,CHEM 4402,4,N/A
-General Physics I and II,PHYS 1401 & PHYS 1402,8,Select one sequence
-University Physics I and II,PHYS 2425 & PHYS 2426,8,Select one sequence
