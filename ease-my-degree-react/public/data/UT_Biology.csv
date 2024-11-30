@@ -1,0 +1,31 @@
+CourseName,CourseNumber,Credits,Prerequisite
+First Year Signature Course,UGS 302,3,N/A
+Rhetoric and Writing,RHE 306,3,N/A
+Social & Behavioral Sciences,SOC 302,3,N/A
+Visual and Performing Arts,ARH 301,3,N/A
+General Chemistry I,CH 301,4,N/A
+General Chemistry II,CH 302,4,N/A
+Chemistry Lab,CH 204,2,N/A
+Introductory Biology,BIO 311C,3,N/A
+Introductory Biology II,BIO 311D,3,N/A
+Genetics,BIO 325,3,N/A
+Biology Lab,BIO 206L,2,N/A
+Ecology,BIO 370,3,N/A
+Statistics,SDS 320E,3,N/A
+Physics Sequence 1,PHY 317K,4,N/A
+Physics Sequence 2,PHY 302K,4,N/A
+Biochemistry,BCH 369 ,3,N/A
+Organic Chemistry I,CH 320M,4,N/A
+Organic Chemistry II,CH 320N,4,N/A
+Organic Chemistry Lab,CH 220C,2,N/A
+Human Biology,BIO 346,3,N/A
+Genetics/Genomics Elective,BCH 339N,3, BIO 321G
+Cell/Molecular Biology Elective,BIO 320,3, BIO 326R
+Ecology/Environment/Health Elective,BIO 326R,3, BIO 329
+Physiology/Anatomy Elective,BIO 446L,3, BIO 365S
+Additional Biology Lab Elective,BIO 320L,3, BIO 446L
+U.S. History I,HIS 315G,3,N/A
+U.S. History II,HIS 315K,3,N/A
+American Government I,GOV 310L,3,N/A
+American Government II,GOV 312L,3,N/A
+Calculus I,M 408C,4,N/A
