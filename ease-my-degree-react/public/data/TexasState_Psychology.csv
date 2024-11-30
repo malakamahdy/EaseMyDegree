@@ -1,0 +1,35 @@
+CourseName,CourseNumber,Credits,Prerequisite
+Intermediate Spanish I,SPAN 2310,3,N/A
+Intermediate Spanish II,SPAN 2320,3,N/A
+British Literature before 1785,ENG 2310,3,N/A
+US Literature since 1865,ENG 2360,3,N/A
+Fundamentals of Human Communication,COMM 1310,3,N/A
+Technical Writing,ENG 3303,3,N/A
+College Algebra,MATH 1315,3,MATH 1314
+Foundations of Chemistry,CHEM 1320,3,N/A
+Engineering Chemistry,CHEM 1335,3,CHEM 1309
+World Religions,REL 1300,3,N/A
+Introduction to Fine Arts,ART 2313,3,HUMA 1315
+History of the United States to 1877,HIST 1310,3,HIST 1301
+African American History from 1877,HIST 2382,3,N/A
+Principles of American Government,POSI 2310,3,GOVT 2306
+Functions of American Government,POSI 2320,3,GOVT 2305
+Behavioral and Personal Financial Management,CA 2351,3,N/A
+Fundamentals of Human Communication,COMM 1310,3,N/A
+Electricity and Magnetism,PHYS 2326,3,N/A
+Introduction to Psychology,PSY 1300,3,None
+Professional Seminar,PSY 2100,1,None
+Introduction to Statistics,PSY 2301,4,PSY 1300
+Experimental and Research Methods,PSY 3402,4,PSY 2301
+Brain and Behavior,PSY 3322,3,PSY 1300
+History and Theory,PSY 4391,3,PSY 3402
+Lifespan Development,PSY 3300,3,PSY 1300
+Adolescent Psychology,PSY 3312,3,PSY 1300
+Psychology of Adulthood and Aging,PSY 3313,3,PSY 1300
+Psychopathology,PSY 3315,3,PSY 1300
+Personality Psychology,PSY 3316,3,PSY 1300
+Social Psychology,PSY 3331,3,PSY 1300
+Sensation and Perception,PSY 3321,3,PSY 1300
+Cognitive Processes,PSY 3341,3,PSY 3402
+Learning and Memory,PSY 4342,3,PSY 3402
+Creative Arts,HUMA 1315,3,N/A
