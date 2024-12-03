@@ -7,7 +7,7 @@ import Register from './Register';
 import Dashboard from './Dashboard';
 import GpaCalculator from './GpaCalculator';
 import SemesterPlanner from './SemesterPlanner'; 
-import GettingStarted from './GettingStarted';
+import CareerCounselor from './CareerCounselor';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/calculator" element={<GpaCalculator />} />
         <Route path="/semesterplanner" element={<SemesterPlanner />} />
-        <Route path="/gettingstarted" element={<GettingStarted />} />
+        <Route path="/careercounselor" element={<CareerCounselor />} />
       </Routes>
     </Router>
   );
