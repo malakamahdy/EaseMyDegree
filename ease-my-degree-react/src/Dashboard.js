@@ -4,7 +4,6 @@ import logo from "./assets/logo.png"; // Assuming you are using the same logo as
 import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
 
 function Dashboard() {
-  //const [user, setUser] = useState(null);
   const [user, setUser] = useState(null);
 
   const navigate = useNavigate(); // Hook from React Router to navigate programmatically
@@ -24,14 +23,11 @@ function Dashboard() {
   const handleGoToCalculator = () => {
     navigate("/calculator"); // Navigate to the GPA Calculator page
   };
-  const handleGoToSettings = () => {
-    navigate("/Settings");
-  };
   const handleGoToSuggestions = () => {
     navigate("/SemesterPlanner");
   };
-  const handleGoToGettingStarted = () => {
-    navigate("/GettingStarted");
+  const handleGoToCareerCounselor = () => {
+    navigate("/CareerCounselor");
   };
 
   return (
@@ -46,16 +42,10 @@ function Dashboard() {
           <p>Email: {user.email}</p>
           <div className="menu-buttons">
             <button
-              onClick={handleGoToSettings}
-              className="go-to-settings-button"
-            >
-              Settings
-            </button>
-            <button
               onClick={handleGoToSuggestions}
               className="go-to-suggestions-button"
             >
-              Semester by Semester Sugestions
+              Semester by Semester Suggestions
             </button>
 
             {/* Button to navigate to the GPA Calculator */}
@@ -67,14 +57,12 @@ function Dashboard() {
             </button>
             {/* Add get started button*/}
             <button
-              onClick={handleGoToGettingStarted}
-              className="go-to-getting-started-button"
+              onClick={handleGoToCareerCounselor}
+              className="go-to-getting-counselor-button"
             >
-              Getting Started
+              Career Counselor
             </button>
-            <button onClick={() => localStorage.removeItem("loggedInUser")}>
-              Logout
-            </button>
+            <button onClick={() => localStorage.removeItem("loggedInUser")}>Logout</button>
           </div>
         </div>
       </div>
