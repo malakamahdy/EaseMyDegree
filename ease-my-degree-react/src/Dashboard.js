@@ -30,6 +30,9 @@ function Dashboard() {
   const handleGoToSuggestions = () => {
     navigate("/SemesterPlanner");
   };
+  const handleGoToGettingStarted = () => {
+    navigate("/GettingStarted");
+  };
 
   return (
     <div className="dashboard-page">
@@ -61,6 +64,13 @@ function Dashboard() {
               className="go-to-calculator-button"
             >
               GPA Calculator
+            </button>
+            {/* Add get started button*/}
+            <button
+              onClick={handleGoToGettingStarted}
+              className="go-to-getting-started-button"
+            >
+              Getting Started
             </button>
             <button onClick={() => localStorage.removeItem("loggedInUser")}>
               Logout
