@@ -1,0 +1,32 @@
+CourseName,CourseNumber,Credits,Prerequisite
+First-Year Signature Course,UGS 302 or 303,3,N/A
+English Composition,RHE 306,3,N/A
+Humanities,E 316L,3,N/A
+Social and Behavioral Science,PSY 301,3,N/A
+Upper-Division Writing,PSY 420M,3,PSY 317L
+Quantitative Reasoning,PSY 420M,3,PSY 317L
+Independent Inquiry,PSY 420M,3,PSY 317L
+Calculus I,M 408K or M 408C,3,N/A
+Statistics for Behavioral Sciences,PSY 317L,3,N/A
+Introductory Biology I,BIO 311C,4,N/A
+Introductory Biology II,BIO 311D,4,BIO 311C
+Genetics,BIO 325,4,BIO 311D
+General Chemistry I,CH 301,4,N/A
+General Chemistry II,CH 302,4,CH 301
+Introductory Chemistry Lab,CH 204,2,CH 302
+General Physics I,PHY 317K,4,N/A
+General Physics Lab I,PHY 105M,1,PHY 317K
+General Physics II,PHY 317L,4,PHY 317K
+General Physics Lab II,PHY 105N,1,PHY 317L
+Introduction to Psychology,PSY 301,3,N/A
+Psychological Methods,PSY 420M,3,PSY 317L
+Clinical/Social/Developmental/Evolutionary Elective,Upper Division Elective,3,N/A
+Cognition/Language/Neuroscience/Perception Elective,Upper Division Elective,3,N/A
+Multicultural/Diversity/Inclusion Elective,Upper Division Elective,3,N/A
+Psychology Elective,Psychology Elective (Upper or Lower Division),3,N/A
+Psychology Elective,Psychology Elective (Upper Division),3,N/A
+Psychology Elective,Psychology Elective (Upper Division),3,N/A
+U.S. History I,HIS 315G,3,N/A
+U.S. History II,HIS 315K,3,N/A
+American Government I,GOV 310L,3,N/A
+American Government II,GOV 312L,3,N/A
