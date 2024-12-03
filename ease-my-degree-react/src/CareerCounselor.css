@@ -1,0 +1,186 @@
+/* General styles for the body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    overflow-y: auto; /* Enables vertical scrolling */
+    background-image: url('./assets/careercounselorBG.png'); /* Path to your image */
+    background-size: cover; /* Makes sure the image covers the entire background */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    min-height: 100vh; /* Ensures the background image covers the whole viewport */
+}
+
+.header {
+    padding: 20px;
+    background-color: #fff8f2; /* Set background color to #fff2f0 for the dropdown area */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+label {
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+select {
+    padding: 5px;
+    font-size: 14px;
+    width: 150px;
+}
+
+.chatbox-container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.chat-box {
+    width: 100%;
+    max-width: 900px; /* Increased width */
+    height: 600px; /* Increased height for the entire chat box */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Remove unnecessary padding around the chat box */
+}
+
+.messages {
+    flex-grow: 1;
+    overflow-y: auto; /* Enables scrolling inside the message container */
+    padding: 15px; /* Add padding inside the messages container */
+    display: flex;
+    flex-direction: column;
+    background-color: #ffe8e0; /* Light background color */
+    border-radius: 10px;
+    margin: 0; /* Ensure no extra margin is added */
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc; /* Add a border between chat and input */
+}
+
+input {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Message styles */
+.student-message {
+    align-self: flex-end;
+    background-color: #feb7ac;
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin: 5px 0;
+    max-width: 80%;
+    color: black; /* Set text color to black */
+}
+
+.planner-message {
+    align-self: flex-start;
+    background-color: #f8f8f8;
+    padding: 8px 12px;
+    border-radius: 15px;
+    margin: 5px 0;
+    max-width: 80%;
+    color: black; /* Set text color to black */
+}
+
+/* Ensure lists inside the planner-message stay within the bubble */
+.planner-message ol, 
+.planner-message ul {
+    margin: 0; /* Reset margins */
+    padding-left: 20px; /* Indent lists inside the chat bubble */
+    list-style-position: inside; /* Ensure bullets/numbers are inside the bubble */
+}
+
+/* Style for numbered lists (ordered lists) */
+.planner-message ol {
+    list-style-type: decimal; /* Use numbers for ordered lists */
+}
+
+/* Style for list items */
+.planner-message li {
+    word-wrap: break-word; /* Ensure long list items wrap correctly */
+    margin-bottom: 5px; /* Add spacing between list items */
+    line-height: 1.6; /* Improve readability with increased line height */
+}
+
+/* General styles for chat bubbles to ensure no overflow */
+.student-message, .planner-message {
+    white-space: pre-wrap; /* Preserve line breaks and wrap long text */
+    word-wrap: break-word; /* Break long words if necessary */
+    overflow-wrap: break-word; /* Handle edge cases for overflow */
+}
+
+/* Style for bullet points inside the chat bubble */
+ul {
+    margin: 0;
+    padding-left: 20px; /* Indent the bullet points */
+    list-style-type: disc; /* Display as bullets */
+    line-height: 1.6; /* Adjust line height for readability */
+}
+
+/* Style for individual list items */
+ul li {
+    margin-bottom: 5px;
+}
+
+/* Optional: Style for links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Style for the loading video container */
+.loading-video-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Take up the entire height of the chat box */
+    width: 100%; /* Full width */
+    background-color: #fff; /* Optional: can be transparent if preferred */
+    border-radius: 10px;
+}
+
+.loading-video-container video {
+    width: 80%; /* Set video width to 80% of the container */
+    max-height: 70%; /* Limit video height to 70% of the chat box */
+    object-fit: contain; /* Ensures the video is properly scaled */
+    border-radius: 10px; /* Match the border radius of the chat box */
+}
