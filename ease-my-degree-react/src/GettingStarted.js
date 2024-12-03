@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Papa from "papaparse"; // Import PapaParse for CSV generation
 import "./GettingStarted.css";
 
 function GettingStarted() {
@@ -72,25 +73,25 @@ function GettingStarted() {
     setGrades(newGrades);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
+    // Prepare the data for CSV
     const updatedCourses = courses.map((course, index) => ({
       ...course,
       creditReceived: responses[index]?.creditReceived || "No",
       grade: grades[index] || "N/A",
     }));
 
-    // Send the updated courses to backend
-    try {
-      await axios.post("http://localhost:5001/api/update-courses", {
-        school,
-        major,
-        updatedCourses,
-      });
-      alert("Your course data has been updated successfully!");
-    } catch (error) {
-      console.error("Error updating courses:", error);
-      alert("Failed to update course data.");
-    }
+    // Convert the updatedCourses to CSV
+    const csv = Papa.unparse(updatedCourses);
+
+    // Create a Blob from the CSV data
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+
+    // Create a link element to trigger the download
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "student_courses.csv"; // Set the filename for the CSV
+    link.click(); // Trigger the download
   };
 
   return (
