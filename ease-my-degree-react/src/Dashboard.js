@@ -25,7 +25,7 @@ function Dashboard() {
     navigate("/calculator"); // Navigate to the GPA Calculator page
   };
   const handleGoToSettings = () => {
-    navigate("/calculator");
+    navigate("/Settings");
   };
   const handleGoToSuggestions = () => {
     navigate("/SemesterPlanner");

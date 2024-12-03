@@ -8,6 +8,7 @@ import Dashboard from './Dashboard';
 import GpaCalculator from './GpaCalculator';
 import SemesterPlanner from './SemesterPlanner'; 
 import GettingStarted from './GettingStarted';
+import Settings from './Settings';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/calculator" element={<GpaCalculator />} />
         <Route path="/semesterplanner" element={<SemesterPlanner />} />
         <Route path="/gettingstarted" element={<GettingStarted />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );
