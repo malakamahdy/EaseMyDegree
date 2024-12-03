@@ -1,0 +1,148 @@
+/* General styles for the body */
+body {
+  margin: 0;
+  padding: 20px;  /* Add padding around the edges of the screen */
+  font-family: Arial, sans-serif;
+  overflow-y: auto; /* Enables vertical scrolling */
+  background-color: #f1f1f1; /* Light background for the page */
+  background-image: url('./assets/semesterPlannerBG.png'); /* Ensure the correct image path */
+  background-size: contain; /* Ensure the entire background image fits without zooming */
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Ensures the background covers the full viewport height */
+}
+
+
+/* Header for the Semester Planner */
+.header {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px; /* Space below the header */
+  padding: 0 20px; /* Padding on sides */
+}
+
+/* Container for the Semester Planner */
+.semester-planner {
+  padding: 20px; /* Inner padding for content */
+  max-width: 900px; /* Reduced width for a more compact look */
+  margin: 0 auto; /* Center the planner */
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Allows scrolling if content overflows */
+}
+
+/* Dropdown container styles */
+.dropdown-container {
+  display: flex;
+  justify-content: space-between; /* Space between dropdowns */
+  margin-bottom: 20px;
+  padding: 0 20px; /* Add padding to the dropdown container */
+}
+
+.dropdown-container label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  width: 45%; /* Adjust the width to spread out the dropdowns */
+  margin-bottom: 5px; /* Reduced margin to bring dropdown closer to the label */
+}
+
+.dropdown-container select {
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 5px; /* Maintain a small gap between label and select */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  width: 100%; /* Ensure dropdown spans full width of its container */
+}
+
+/* Table styles for course and semester data */
+.courses-table,
+.semester-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  padding: 0 20px; /* Padding for tables */
+}
+
+.courses-table th, .semester-table th, .courses-table td, .semester-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+/* Updated background color for table headers */
+.courses-table th, .semester-table th {
+  background-color: #a1bdbc; /* Updated header color */
+  font-weight: bold;
+}
+
+/* Alternating row background color */
+.courses-table tr:nth-child(even), .semester-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.courses-table tr:hover, .semester-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Adjust cell text alignment */
+.courses-table td, .semester-table td {
+  text-align: left; /* Align text to the left for better readability */
+}
+
+/* Adjust total credits row */
+.semester-table tr:last-child td {
+  font-weight: bold;
+  background-color: #eaeaea; /* Slightly darker background for the last row */
+  text-align: center; /* Center text for total credits */
+}
+
+/* Styles for displaying multiple semester tables */
+.semester-tables {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adds space between each table */
+}
+
+/* Space out tables within the semester-tables container */
+.semester-table {
+  margin-bottom: 20px;
+}
+
+/* Ensure all tables use full width */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Styling the course data within the table */
+th, td {
+  padding: 10px; /* Increased padding for better readability */
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Hover effect on rows */
+tr:hover {
+  background-color: #f5f5f5;
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; /* Adjust as needed */
+}
+
+.loading-gif {
+  width: 50px; /* Adjust size as needed */
+  height: auto;
+}

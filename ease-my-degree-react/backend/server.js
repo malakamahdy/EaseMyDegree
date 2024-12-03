@@ -1,114 +1,135 @@
-const express = require("express");
-const fs = require("fs");
-const path = require("path");
-const Papa = require("papaparse");
-const pdfParse = require("pdf-parse");
-const { Configuration, OpenAIApi } = require("openai");
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
+const csv = require('csv-parser');  // Import the CSV parser
+require('dotenv').config();
 
 const app = express();
-const port = 5001;
+const port = process.env.PORT || 5001;
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, "public")));
+app.use(cors());
+app.use(bodyParser.json()); // Parses incoming JSON requests
 
-// Middleware to parse JSON
-app.use(express.json());
+// Dummy in-memory user store (replace with database)
+let users = [
+  {
+    id: 1,
+    email: 'user@example.com',
+    password: '$2a$10$Q4n2sFk2sJmFk3xCXP/j9.k8npNm8F5PbcGqAY9ZITgs5gFzqgk0W', // hashed 'password123'
+    preferences: {},
+    graduationDate: "2025-05-15",  // Example graduation date
+  },
+];
 
-// Initialize OpenAI API
-const openai = new OpenAIApi(
-  new Configuration({
-    apiKey: "YOUR_OPENAI_API_KEY", // Replace with your OpenAI API key
-  })
-);
-
-// Helper function to extract text from PDF
-const extractPdfText = async (school) => {
-  const pdfPath = path.join(__dirname, "public", "data", `${school}_CourseOfferings.pdf`);
-  const pdfBuffer = fs.readFileSync(pdfPath);
-  const data = await pdfParse(pdfBuffer);
-  return data.text;
+// Function to read CSV file based on the user's graduation date or degree plan
+const readCsvFile = (filePath) => {
+  return new Promise((resolve, reject) => {
+    const results = [];
+    fs.createReadStream(filePath)
+      .pipe(csv())
+      .on('data', (data) => results.push(data))
+      .on('end', () => resolve(results))
+      .on('error', (error) => reject(error));
+  });
 };
 
-// Endpoint to handle updating courses
-app.post("/api/update-courses", (req, res) => {
-  const { school, major, updatedCourses } = req.body;
+// Function to write updated course data back to CSV
+const writeCsvFile = (filePath, data) => {
+  const header = 'Course,Course Number,Credits,Prerequisite,Credit Received,Grade\n';
+  const rows = data.map((course) =>
+    `${course.courseName},${course.courseNumber},${course.credits},${course.prerequisite},${course.creditReceived},${course.grade}\n`
+  );
+  const csvContent = header + rows.join('');
 
-  // Original file path (to read the original data)
-  const originalFilePath = path.join(__dirname, "public", "data", `${school}_${major}.csv`);
+  fs.writeFile(filePath, csvContent, 'utf8', (err) => {
+    if (err) throw err;
+    console.log('CSV file successfully updated!');
+  });
+};
 
-  // Target file path for the updated file
-  const updatedFilePath = path.join(__dirname, "public", "data", "ClassInfo.csv");
+// Middleware to verify JWT tokens
+const authenticateToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
 
-  // Check if the original file exists
-  if (!fs.existsSync(originalFilePath)) {
-    return res.status(404).json({ message: "Original CSV file not found for the selected school and major." });
+  if (!token) return res.status(401).json({ message: 'Access denied' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ message: 'Invalid token' });
+
+    req.user = user; // Add user info to the request
+    next();
+  });
+};
+
+// Login route
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  // Find user by email
+  const user = users.find((user) => user.email === email);
+
+  if (!user) {
+    return res.status(400).json({ message: 'Invalid credentials' });
   }
 
-  // Read the original file
-  fs.readFile(originalFilePath, "utf8", (err, csvData) => {
-    if (err) {
-      console.error("Error reading the file:", err);
-      return res.status(500).json({ message: "Error reading the CSV file." });
+  // Compare hashed passwords
+  bcrypt.compare(password, user.password, (err, isMatch) => {
+    if (err) throw err;
+
+    if (isMatch) {
+      // Create JWT token (using a secret key)
+      const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+      // Respond with the token
+      res.json({ token });
+    } else {
+      res.status(400).json({ message: 'Invalid credentials' });
     }
-
-    // Parse the CSV data
-    const parsedData = Papa.parse(csvData, { header: true });
-    const rows = parsedData.data;
-
-    // Update the courses with creditReceived and grade
-    updatedCourses.forEach((course) => {
-      const row = rows.find((r) => r.courseNumber === course.courseNumber);
-      if (row) {
-        row.creditReceived = course.creditReceived;
-        row.grade = course.grade;
-      }
-    });
-
-    // Convert updated data back to CSV
-    const updatedCSV = Papa.unparse(rows);
-
-    // Write the updated CSV to the new file path
-    fs.writeFile(updatedFilePath, updatedCSV, "utf8", (err) => {
-      if (err) {
-        console.error("Error writing the file:", err);
-        return res.status(500).json({ message: "Error saving the updated CSV file." });
-      }
-      res.json({ message: "Courses updated successfully!", filePath: `/data/ClassInfo.csv` });
-    });
   });
 });
 
-// Endpoint to handle chat requests for degree suggestions
-app.post("/api/chat", async (req, res) => {
-  const { school, userMessage } = req.body;
+// Fetch degree plans based on user's graduation date
+app.get('/api/degree-plans', authenticateToken, async (req, res) => {
+  const userId = req.user.id;  // Get user ID from the token
+
+  // Find user by ID
+  const user = users.find((u) => u.id === userId);
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  // Use graduationDate or preferences to select the correct CSV file
+  const filePath = path.join(__dirname, `data/degree_plans_${user.graduationDate}.csv`);  // Adjust filename based on graduation date or preferences
 
   try {
-    // Extract the PDF text for the selected school
-    const schoolPdfText = await extractPdfText(school);
-
-    // Create a prompt for GPT-3.5 based on the PDF and user message
-    const prompt = `
-      Given the following course offerings for ${school}:
-      ${schoolPdfText}
-      Answer the following question:
-      ${userMessage}
-    `;
-
-    // Call OpenAI to get a response based on the prompt
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: prompt }],
-    });
-
-    const reply = response.data.choices[0].message.content;
-    res.json({ reply });
+    const degreePlans = await readCsvFile(filePath);
+    res.json(degreePlans);
   } catch (error) {
-    console.error("Error handling chat request:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ message: 'Error reading degree plan file', error });
+  }
+});
+
+// Endpoint to handle saving user course updates
+app.post('/api/update-courses', authenticateToken, (req, res) => {
+  const { school, major, updatedCourses } = req.body;
+
+  // Construct the file path for the correct CSV template (based on school and major)
+  const filePath = path.join(__dirname, 'data', `${school}_${major}_degree_plan.csv`);
+
+  // Write the updated courses to the CSV file
+  try {
+    writeCsvFile(filePath, updatedCourses);
+    res.status(200).json({ message: 'Courses updated successfully!' });
+  } catch (error) {
+    console.error('Error updating courses:', error);
+    res.status(500).json({ message: 'Error updating courses', error });
   }
 });
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(`Server running on port ${port}`);
 });
