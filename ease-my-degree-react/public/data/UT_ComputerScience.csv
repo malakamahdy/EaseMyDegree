@@ -1,0 +1,28 @@
+CourseName,CourseNumber,Credits,Prerequisite
+Introduction to Programming,CS 312,3,N/A
+Calculus I,M 408C,4,N/A
+U.S. History I,HIS 315G,3,N/A
+Social & Behavioral Sciences,SOC 302,3,N/A
+First-Year Signature Course,UGS 302,3,N/A
+Discrete Mathematics for Computer Science,CS 311,3,CS 312
+Data Structures,CS 314,3,CS 311
+Calculus II,M 408D,4,M 408C or 408N
+U.S. History II,HIS 315K,3,N/A
+Rhetoric and Writing,RHE 306,3,N/A
+Linear Algebra and Probability,M 408M,3,M 408C and M 408D
+Computer Organization and Architecture,CS 429,3,CS 314
+Statistics,SDS 321,4,M 408M
+American Government I,GOV 310L,3,N/A
+Visual and Performing Arts,ARH 301,3,N/A
+Operating Systems,CS 439,3,CS 429
+Upper Division Elective (CS),CS UDE,3,CS 314
+Multivariable Calculus or Data Science,340L,3,M 408D
+American Government II,GOV 312L,3,N/A
+Algorithms,CS 331,3,CS 314
+Upper Division Elective (CS),CS UDE,3,CS 314
+Upper Division Elective (CS),CS UDE,3,CS 314
+English Literature,E 316L,3,N/A
+Upper Division Elective (CS),CS UDE,3,CS 314
+Biology 1,BIO 311C,3,N/A
+Biology 2,BIO 311D,3,311C
+Principles of Computer Systems,CS 439,3,N/A
