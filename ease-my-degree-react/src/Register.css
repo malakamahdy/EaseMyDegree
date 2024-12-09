@@ -63,17 +63,17 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Changed to align content to the top */
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  transform: scale(1.2);
+  transform: scale(1);
   transition: transform 0.3s ease;
-  max-height: 600px; /* Adjusted max height */
+  height: auto; /* Allow the height to expand based on content */
 }
 
 .register-rectangle:hover {
-  transform: scale(1.25);
+  transform: scale(1.05); /* Slightly smaller hover effect */
 }
 
 h2 {
@@ -144,4 +144,8 @@ button:hover {
   font-weight: bold;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.register-rectangle .login-link {
+  margin-top: 10px; /* Reduced space between the form and the link */
 }
