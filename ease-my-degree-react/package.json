@@ -31,18 +31,17 @@
     "react-markdown": "^9.0.1",
     "react-router-dom": "^6.28.0",
     "react-scripts": "5.0.1",
-    "start": "^5.1.0",
     "stream-browserify": "^3.0.0",
     "styled-components": "^6.1.13",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "test": "react-scripts test",
+  "eject": "react-scripts eject"
+},
   "eslintConfig": {
     "extends": [
       "react-app",
