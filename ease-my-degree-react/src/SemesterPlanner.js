@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { parse } from "papaparse";
+import { jsPDF } from "jspdf"; // Added for PDF generation
+import "jspdf-autotable"; // Added for table formatting in PDFs
 import "./SemesterPlanner.css";
-import backgroundImage from './assets/semesterPlannerBG.png';
-
 
 function SemesterPlanner() {
   const openaiApiKey = process.env.REACT_APP_OPENAI_API_KEY;
@@ -15,6 +15,7 @@ function SemesterPlanner() {
   const [semesterPlan, setSemesterPlan] = useState([]);
   const [messages, setMessages] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [personalizations, setPersonalizations] = useState("");
 
   if (!openaiApiKey) {
     console.error("API Key is missing! Please ensure it's in your .env file.");
@@ -28,13 +29,13 @@ function SemesterPlanner() {
 
     try {
       setLoading(true);
-      const filePath = `/data/${school}_${major}.csv`; // Ensure the correct path here
+      const filePath = `/data/${school}_${major}.csv`;
       console.log("Fetching file from:", filePath);
 
       const response = await axios.get(filePath);
       const parsedCourses = parseCSV(response.data);
       setCourses(parsedCourses);
-      setResponses(new Array(parsedCourses.length).fill({ creditReceived: "No", grade: "N/A" }));
+      setResponses(new Array(parsedCourses.length).fill({ creditReceived: "No" }));
     } catch (error) {
       console.error("Error fetching courses:", error);
       alert("Unable to load course data. Please check your selection and try again.");
@@ -68,12 +69,6 @@ function SemesterPlanner() {
     setResponses(newResponses);
   };
 
-  const handleGradeChange = (index, value) => {
-    const newResponses = [...responses];
-    newResponses[index] = { ...newResponses[index], grade: value };
-    setResponses(newResponses);
-  };
-
   const handleSubmit = async () => {
     console.log("Courses loaded:", courses);
     console.log("Is submitted:", isSubmitted);
@@ -97,9 +92,13 @@ function SemesterPlanner() {
     DO NOT SAY OR DO ANYTHING ELSE. If they took the course already, do not include it.
     Do not include any text or extra lines above the tables, just the clean CSV data.
     MAKE SURE THE CSVs ARE SEPARATED FOR EACH SEMESTER. DO NOT REPEAT ANY CLASSES.
+    LOOK AT THE PREREQUISITE. ENSURE THAT THE PREREQUESITE IS IN THE SEMESTER BEFORE IT.
+    A PREQUESITE MUST BE TAKEN BEFORE THE CLASS ITSELF.
+    THE STUDENT ALSO REQUESTS THE FOLLOWING, MUST FOLLOW THESE
+    CONSTRAINTS!!!: ${personalizations}
     Here are the courses for: ${courses.map((course, index) =>
       `${course.courseName} (${course.courseNumber}): ${course.credits} credits, 
-      Credit received: ${responses[index].creditReceived}, Grade: ${responses[index].grade}`
+      Credit received: ${responses[index].creditReceived}`
     ).join("; ")}`;
 
     const newMessages = [{ sender: "student", text: userMessage }];
@@ -111,7 +110,7 @@ function SemesterPlanner() {
         {
           model: "gpt-4o",
           messages: [{ role: "user", content: userMessage }],
-          max_tokens: 2000,
+          max_tokens: 4000,
         },
         {
           headers: {
@@ -146,7 +145,7 @@ function SemesterPlanner() {
   const parseAndDisplayCSV = (csvText) => {
     const semesterTables = csvText.split("\n\n").map((semesterText) => {
       const lines = semesterText.split("\n").filter((line) => {
-        return line.trim() !== "" && !line.startsWith("Course Name"); // Ignore headers and empty lines
+        return line.trim() !== "" && !line.startsWith("Course Name");
       });
 
       const rows = lines.map((line) => {
@@ -167,71 +166,47 @@ function SemesterPlanner() {
     setSemesterPlan(semesterTables);
   };
 
-  const handleFeedbackSubmit = async (e) => {
-    if (e.key === "Enter") {
-      const feedback = e.target.value.trim(); 
-
-      const userMessage = `Please generate a semester planner in CSV format. 
-    Each semester should be a separate CSV block with the columns:
-    Course Name, Course Number, Credit Hours, Total Credits Per Semester.
-    Do not include quotation marks around the course data. MUST have at least one class. DO NOT GO OVER 18 CREDITS. DO NOT MAKE UP ANY CLASSES.
-    ONLY USE THE CLASSES GIVEN. DO NOT MAKE UP ANY. All classes must be used. Do not put a class that was already taken.
-    Only include one header (Course Name, Course Number, Credit Hours, Total Credits Per Semester) at the top, followed by the course details for each semester.
-    Each semester should include the total credits per semester (sum of credits for each course).
-    DO NOT SAY OR DO ANYTHING ELSE. If they took the course already, do not include it.
-    Do not include any text or extra lines above the tables, just the clean CSV data.
-    MAKE SURE THE CSVs ARE SEPARATED FOR EACH SEMESTER. DO NOT REPEAT ANY CLASSES.
+  const handlePrintSchedule = () => {
+    const doc = new jsPDF();
   
-      The student asked for: ${feedback}
-
-      Here are the courses for: ${courses.map((course, index) =>
-        `${course.courseName} (${course.courseNumber}): ${course.credits} credits, 
-        Credit received: ${responses[index].creditReceived}, Grade: ${responses[index].grade}`
-      ).join("; ")}`;
-
-      const newMessages = [...messages, { sender: "student", text: userMessage }];
-      setMessages(newMessages);
-
-      setLoading(true); 
-
-      try {
-        const response = await axios.post(
-          "https://api.openai.com/v1/chat/completions",
-          {
-            model: "gpt-4",
-            messages: [{ role: "user", content: userMessage }],
-            max_tokens: 2000,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${openaiApiKey}`,
-              "Content-Type": "application/json",
-            },
-            timeout: 30000,
-          }
-        );
-
-        const chatGptResponse = {
-          sender: "planner",
-          text: response.data.choices[0].message.content.trim(),
-        };
-
-        setMessages((prevMessages) => [...prevMessages, chatGptResponse]);
-        setSemesterPlan(chatGptResponse.text);
-
-        parseAndDisplayCSV(chatGptResponse.text); 
-
-        setIsSubmitted(true); 
-      } catch (error) {
-        console.error("Error communicating with OpenAI API:", error);
-        alert("There was an error processing your request. Please try again.");
-      } finally {
-        setLoading(false);
+    // Start with the first semester
+    const tableData = semesterPlan.map((semester) => {
+      return semester.rows.map((course) => [
+        course.courseName,
+        course.courseNumber,
+        course.credits,
+      ]);
+    });
+  
+    // Generate the table for each semester
+    tableData.forEach((semesterRows, idx) => {
+      if (idx > 0) {
+        doc.addPage(); // Add a new page for subsequent semesters
       }
-
-      e.target.value = '';
-    }
+  
+      // Set up the autoTable options
+      doc.autoTable({
+        head: [['Course Name', 'Course Number', 'Credits']], // Column headers
+        body: semesterRows, // Rows for the current semester
+        startY: 20, // Start the table 20mm from the top
+        margin: { top: 20, left: 10, right: 10, bottom: 10 }, // Direct margin configuration
+        tableWidth: 'auto', // Let the table width adjust automatically
+        theme: 'striped', // Optional: makes it visually more appealing
+        pageBreak: 'auto', // Allow the table to break into multiple pages if needed
+        columnStyles: {
+          0: { cellWidth: 'auto' }, // Adjust column 1 (Course Name) width
+          1: { cellWidth: 'auto' }, // Adjust column 2 (Course Number) width
+          2: { cellWidth: 'auto' }, // Adjust column 3 (Credits) width
+        },
+        bodyStyles: { lineWidth: 0.1, lineColor: [0, 0, 0] }, // Adjust line styles
+      });
+    });
+  
+    // Save the PDF
+    doc.save('semester_plan.pdf');
   };
+  
+  
 
   return (
     <div className="semester-planner-body">
@@ -260,50 +235,45 @@ function SemesterPlanner() {
           </>
         )}
 
-        {/* Courses table and button */}
         {courses.length > 0 && !isSubmitted && (
-          <div className="courses-table-container">
-            <table className="courses-table">
-              <thead>
-                <tr>
-                  <th>Course Name</th>
-                  <th>Credits</th>
-                  <th>Credit Received?</th>
-                  <th>Grade</th>
-                </tr>
-              </thead>
-              <tbody>
-                {courses.map((course, index) => (
-                  <tr key={index}>
-                    <td>{course.courseName}</td>
-                    <td>{course.credits}</td>
-                    <td>
-                      <select
-                        value={responses[index].creditReceived}
-                        onChange={(e) => handleCreditReceivedChange(index, e.target.value)}
-                      >
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                      </select>
-                    </td>
-                    <td>
-                      <select
-                        value={responses[index].grade}
-                        onChange={(e) => handleGradeChange(index, e.target.value)}
-                      >
-                        <option value="N/A">N/A</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="C">C</option>
-                        <option value="D">D</option>
-                        <option value="F">F</option>
-                      </select>
-                    </td>
+          <>
+            <div className="personalization-container">
+              <label>Personalizations:</label>
+              <textarea
+                value={personalizations}
+                onChange={(e) => setPersonalizations(e.target.value)}
+                placeholder="Add any personal preferences for the schedule here..."
+              />
+            </div>
+            <div className="courses-table-container">
+              <table className="courses-table">
+                <thead>
+                  <tr>
+                    <th>Course Name</th>
+                    <th>Credits</th>
+                    <th>Credit Received?</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {courses.map((course, index) => (
+                    <tr key={index}>
+                      <td>{course.courseName}</td>
+                      <td>{course.credits}</td>
+                      <td>
+                        <select
+                          value={responses[index].creditReceived}
+                          onChange={(e) => handleCreditReceivedChange(index, e.target.value)}
+                        >
+                          <option value="Yes">Yes</option>
+                          <option value="No">No</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
 
         {courses.length > 0 && !isSubmitted && (
@@ -312,45 +282,35 @@ function SemesterPlanner() {
           </button>
         )}
 
-        {/* Semester plan and feedback */}
         {semesterPlan.length > 0 && (
-          <>
-            <div className="semester-tables">
-              {semesterPlan.map((semester, idx) => (
-                <div key={idx} className="semester-table">
-                  <h2>Semester {idx + 1}</h2>
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Course Name</th>
-                        <th>Course Number</th>
-                        <th>Credits</th>
+          <div className="semester-tables">
+            {semesterPlan.map((semester, idx) => (
+              <div key={idx} className="semester-table">
+                <h2>Semester {idx + 1}</h2>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Course Name</th>
+                      <th>Course Number</th>
+                      <th>Credits</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {semester.rows.map((course, index) => (
+                      <tr key={index}>
+                        <td>{course.courseName}</td>
+                        <td>{course.courseNumber}</td>
+                        <td>{course.credits}</td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {semester.rows.map((course, index) => (
-                        <tr key={index}>
-                          <td>{course.courseName}</td>
-                          <td>{course.courseNumber}</td>
-                          <td>{course.credits}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ))}
-            </div>
-
-            {isSubmitted && (
-              <div className="feedback-box">
-                <input
-                  type="text"
-                  placeholder="Don't like something? Let's change it!"
-                  onKeyDown={handleFeedbackSubmit}
-                />
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            )}
-          </>
+            ))}
+            <button onClick={handlePrintSchedule} className="print-button">
+              Print Schedule
+            </button>
+          </div>
         )}
       </div>
     </div>

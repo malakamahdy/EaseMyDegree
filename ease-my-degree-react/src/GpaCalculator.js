@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { parse } from "papaparse";
 import "./GpaCalculator.css";
-import backgroundImage from './assets/GPAcalculatorBG.png';
 
 function GpaCalculator() {
   const [school, setSchool] = useState("");
@@ -12,6 +11,7 @@ function GpaCalculator() {
   const [gpa, setGpa] = useState(null);
   const [desiredGPA, setDesiredGPA] = useState("");
   const [recommendedGrades, setRecommendedGrades] = useState(null);
+  const [gptSuggestions, setGptSuggestions] = useState(null);
 
   const fetchCourses = async () => {
     if (!school || !major) {
@@ -98,7 +98,8 @@ function GpaCalculator() {
       }
     });
 
-    const requiredTotalPoints = desiredGPA * currentCredits;
+    const currentGPA = currentCredits === 0 ? 0 : (currentPoints / currentCredits).toFixed(2);
+    const requiredTotalPoints = desiredGPA * (currentCredits + getRemainingCredits());
     let pointsNeeded = requiredTotalPoints - currentPoints;
 
     if (pointsNeeded <= 0) {
@@ -126,9 +127,63 @@ function GpaCalculator() {
     }
 
     setRecommendedGrades(requiredGrades);
+
+    // Now, call GPT-4 to suggest classes
+    fetchGPTSuggestions(currentGPA, currentCredits, requiredGrades);
   };
 
-  // Use effect to call calculateRecommendedGrades whenever desiredGPA changes
+  const getRemainingCredits = () => {
+    return courses.filter(course => course.grade === "N/A")
+                  .reduce((total, course) => total + course.credits, 0);
+  };
+
+  const fetchGPTSuggestions = async (currentGPA, currentCredits, requiredGrades) => {
+    const openAIAPIKey = "YOUR_OPENAI_API_KEY"; // Replace with your actual OpenAI API key
+
+    const prompt = `
+    I am trying to calculate the grades I need to achieve a desired GPA. Here is the data:
+    
+    - Current GPA: ${currentGPA}
+    - Total credits completed so far: ${currentCredits}
+    - Desired GPA: ${desiredGPA}
+    - Remaining courses (credits and grades needed):
+        ${courses.filter(course => course.grade === "N/A").map(course => `    - ${course.courseName}, Credits: ${course.credits}`).join("\n")}
+    
+    Please suggest the grades needed for each remaining course to achieve the desired GPA. Ensure that the grade letter corresponds to the necessary GPA points: A = 4.0, B = 3.0, C = 2.0, D = 1.0, F = 0.0.
+  `;
+    
+
+    try {
+      const response = await axios.post(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          model: "gpt-4",
+          messages: [
+            {
+              role: "system",
+              content: "You are a helpful academic advisor.",
+            },
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+        },
+        {
+          headers: {
+            "Authorization": `Bearer ${openAIAPIKey}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const gptResponse = response.data.choices[0].message.content;
+      setGptSuggestions(gptResponse);
+    } catch (error) {
+      console.error("Error fetching GPT suggestions:", error);
+    }
+  };
+
   useEffect(() => {
     if (desiredGPA !== "") {
       calculateRecommendedGrades();
@@ -142,7 +197,7 @@ function GpaCalculator() {
   };
 
   return (
-    <div className="gpa-calculator-body" style={{ backgroundImage: `url(${backgroundImage})` }}>
+    <div className="gpa-calculator-body" >
       <div className="gpa-calculator">
         <h1>GPA Calculator</h1>
 
@@ -230,6 +285,13 @@ function GpaCalculator() {
             </ul>
           </div>
         )}
+
+{gptSuggestions && (
+  <div className="gpt-suggestions">
+    <h2>GPT-4 Recommendations:</h2>
+    <p>{gptSuggestions}</p>
+  </div>
+)}
 
         {gpa && (
           <div className="gpa-result">
