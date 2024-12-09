@@ -1,92 +1,91 @@
-/* src/Dashboard.css */
-
-/* General styles for the dashboard page */
-.dashboard-page {
-  display: flex;
-  height: 100vh;
-}
-
-.left-side {
-  width: 50%;
-  background-color: #f1f1f1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.logo {
-  width: 200px;
-  height: auto;
-}
-
-.tagline {
-  font-size: 1.5rem;
-  color: #333;
-  margin-top: 20px;
-}
-
-.right-side {
-  width: 90%;
-  background-color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.dashboard-rectangle {
-  width: 400px;
-  padding: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  text-align: center;
-}
-
-h2 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-}
-
-p {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: #555;
-}
-.menu-buttons {
+/* General layout */
+.dashboard-container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two buttons per row */
-  gap: 8px;
-  margin: 20px 0;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-  .menu-buttons {
-    grid-template-columns: 1fr; /* Stack buttons vertically */
-    gap: 10px; /* Adjust gap for better spacing */
-  }
-
-  /* Make buttons smaller when vertically stacked */
-  .menu-button {
-    font-size: 0.4rem; /* Smaller font size */
-    padding: 2px 4px; /* Smaller padding */
-    width: 90%; /* Make buttons occupy 90% width of their container */
-    margin: 0 auto; /* Center buttons */
-  }
-}
-
-.menu-button {
+  grid-template-columns: 250px 1fr;
+  height: 100vh;
+  font-family: 'Garet', sans-serif;
   background-color: #fefcf8;
-  color: #a1bdbc;
-  border: none;
+  color: #333;
+}
+
+/* Sidebar styling */
+.sidebar {
+  background-color: #a1bdbc;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 40px;
+}
+
+.sidebar nav a {
+  display: block;
+  text-decoration: none;
+  padding: 10px 0;
+  color: white;
+  font-weight: bold;
   border-radius: 5px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.menu-button:hover {
-  background-color: #fdf4e7;
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background-color: #feb7a3;
+  color: #fff;
 }
 
+/* Main content styling - Centered header */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center */
+  align-items: center; /* Horizontally center */
+  height: 100%; /* Full height of its parent */
+  padding: 30px;
+  gap: 30px;
+}
+
+.main-content h1 {
+  color: #ffbaa8;
+  font-size: 4rem; 
+}
+
+/* Options grid styling - Stacked buttons fully expanded */
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Adjusted gap between buttons */
+  width: 100%;
+}
+
+.option-card {
+  background-color: #fdf4e7; /* Keeping the original color */
+  color: #333;
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1.8rem; /* Increased font size for better visibility */
+  font-weight: bold;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  /* Make buttons span the entire width of the parent container */
+  width: 100%;
+  max-width: 100%; /* Prevent buttons from breaking their parent container */
+
+  /* Decrease the height of each button */
+  height: 120px; /* Adjusted height */
+}
+
+.option-card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.option-card.logout {
+  background-color: #feb7a3;
+  color: white;
+}

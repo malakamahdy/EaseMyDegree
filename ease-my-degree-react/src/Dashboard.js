@@ -1,71 +1,67 @@
 import React, { useEffect, useState } from "react";
-import "./Dashboard.css"; // Create a separate CSS file for Dashboard styles
-import logo from "./assets/logo.png"; // Assuming you are using the same logo as the login page
-import { useNavigate } from "react-router-dom"; // Import useNavigate from React Router
+import "./Dashboard.css"; // Dashboard styles
+import logo from "./assets/logo.png"; // Assuming the logo path is correct
+import { useNavigate } from "react-router-dom"; // React Router hook
 
 function Dashboard() {
-  const [user, setUser] = useState(null);
-
-  const navigate = useNavigate(); // Hook from React Router to navigate programmatically
+  const [user, setUser] = useState(null); // User state
+  const navigate = useNavigate(); // Hook for navigation
 
   useEffect(() => {
-    // Get the user data from localStorage (set during login)
+    // Fetch user data from localStorage
     const userData = JSON.parse(localStorage.getItem("loggedInUser"));
     if (userData) {
       setUser(userData);
+    } else {
+      // If no user is found, redirect to the login page
+      navigate("/login");
     }
-  }, []);
+  }, [navigate]);
 
   if (!user) {
     return <p>Loading...</p>;
   }
 
   const handleGoToCalculator = () => {
-    navigate("/calculator"); // Navigate to the GPA Calculator page
+    navigate("/calculator"); // Navigate to GPA Calculator page
   };
+
   const handleGoToSuggestions = () => {
-    navigate("/SemesterPlanner");
+    navigate("/SemesterPlanner"); // Navigate to Semester Planner page
   };
+
   const handleGoToCareerCounselor = () => {
-    navigate("/CareerCounselor");
+    navigate("/CareerCounselor"); // Navigate to Career Counselor page
+  };
+
+  const handleLogout = () => {
+    // Clear user data and redirect to login
+    localStorage.removeItem("loggedInUser");
+    navigate("/login");
   };
 
   return (
-    <div className="dashboard-page">
-      <div className="left-side">
+    <div className="dashboard-container">
+      <aside className="sidebar">
         <img src={logo} alt="Ease My Degree Logo" className="logo" />
-        <p className="tagline">The future of academic planning.</p>
-      </div>
-      <div className="right-side">
-        <div className="dashboard-rectangle">
-          <h2>Welcome back, {user.name}!</h2>
-          <p>Email: {user.email}</p>
-          <div className="menu-buttons">
-            <button
-              onClick={handleGoToSuggestions}
-              className="go-to-suggestions-button"
-            >
-              Semester by Semester Suggestions
-            </button>
-
-            {/* Button to navigate to the GPA Calculator */}
-            <button
-              onClick={handleGoToCalculator}
-              className="go-to-calculator-button"
-            >
-              GPA Calculator
-            </button>
-            {/* Add get started button*/}
-            <button
-              onClick={handleGoToCareerCounselor}
-              className="go-to-getting-counselor-button"
-            >
-              Career Counselor
-            </button>
-            <button onClick={() => localStorage.removeItem("loggedInUser")}>Logout</button>
-          </div>
+      </aside>
+      <main className="main-content">
+        <h1>How can I ease your degree today, {user.name}?</h1>
+        <div className="options-grid">
+          <button className="option-card" onClick={handleGoToSuggestions}>
+            Semester Planner
+          </button>
+          <button className="option-card" onClick={handleGoToCareerCounselor}>
+            Career Counselor
+          </button>
+          <button className="option-card" onClick={handleGoToCalculator}>
+            GPA Calculator
+          </button>
+          <button className="option-card logout" onClick={handleLogout}>
+            Log Out
+          </button>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

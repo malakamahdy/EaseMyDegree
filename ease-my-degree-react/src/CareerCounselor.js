@@ -7,7 +7,6 @@ import "./CareerCounselor.css";
 function CareerCounselor() {
   const openaiApiKey = process.env.REACT_APP_OPENAI_API_KEY;
   const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +20,6 @@ function CareerCounselor() {
   const maxTokens = 1500; 
 
   const handleSchoolChange = (e) => setSchool(e.target.value);
-  const handleMajorChange = (e) => setMajor(e.target.value);
   const handleMessageChange = (e) => setMessage(e.target.value);
 
   // Function to fetch and parse the CSV file based on the selected school
@@ -151,13 +149,6 @@ function CareerCounselor() {
               <option value="TAMU-CC">TAMU-CC</option>
               <option value="TexasState">Texas State</option>
               <option value="UT">UT</option>
-            </select>
-            <label>Major:</label>
-            <select onChange={handleMajorChange} value={major}>
-              <option value="">Select Major</option>
-              <option value="ComputerScience">Computer Science</option>
-              <option value="Psychology">Psychology</option>
-              <option value="Biology">Biology</option>
             </select>
           </div>
         )}

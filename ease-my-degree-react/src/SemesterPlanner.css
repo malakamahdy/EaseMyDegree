@@ -5,7 +5,7 @@ body {
   font-family: Arial, sans-serif;
   overflow-y: auto; /* Enables vertical scrolling */
   background-color: #f1f1f1; /* Light background for the page */
-  background-image: url('./assets/semesterPlannerBG.png'); /* Ensure the correct image path */
+  background-image: url('./assets/featuresBG.png'); /* Ensure the correct image path */
   background-size: contain; /* Ensure the entire background image fits without zooming */
   background-position: center;
   background-repeat: no-repeat;
