@@ -1,85 +1,100 @@
+// SemesterPlanner.js
+// Generates semester schedules based on student personalizations.
+// Allows student to download their semester plan.
+
 import React, { useState } from "react";
 import axios from "axios";
 import { parse } from "papaparse";
-import { jsPDF } from "jspdf"; // Added for PDF generation
-import "jspdf-autotable"; // Added for table formatting in PDFs
-import "./SemesterPlanner.css";
+import { jsPDF } from "jspdf"; // Library to generate PDF documents
+import "jspdf-autotable"; // Plugin for formatting tables in PDFs
+import "./SemesterPlanner.css"; // Custom CSS file for styling
 
 function SemesterPlanner() {
+  // Retrieve OpenAI API key from environment variables
   const openaiApiKey = process.env.REACT_APP_OPENAI_API_KEY;
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [courses, setCourses] = useState([]);
-  const [responses, setResponses] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [semesterPlan, setSemesterPlan] = useState([]);
-  const [messages, setMessages] = useState([]);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [personalizations, setPersonalizations] = useState("");
 
+  // State variables for the component
+  const [school, setSchool] = useState(""); // Selected school
+  const [major, setMajor] = useState(""); // Selected major
+  const [courses, setCourses] = useState([]); // Array to store courses fetched from CSV
+  const [responses, setResponses] = useState([]); // Array to store user's credit received status for each course
+  const [loading, setLoading] = useState(false); // Loading state for async operations
+  const [semesterPlan, setSemesterPlan] = useState([]); // Stores the parsed semester plan data
+  const [messages, setMessages] = useState([]); // Array to store messages exchanged with the AI
+  const [isSubmitted, setIsSubmitted] = useState(false); // Flag to indicate whether the form has been submitted
+  const [personalizations, setPersonalizations] = useState(""); // User's personalized constraints for the schedule
+
+  // Check if the API key is missing, log an error if true
   if (!openaiApiKey) {
     console.error("API Key is missing! Please ensure it's in your .env file.");
   }
 
+  // Function to fetch courses from a CSV file based on the selected school and major
   const fetchCourses = async () => {
     if (!school || !major) {
-      alert("Please select a school and major first.");
+      alert("Please select a school and major first."); // Alert if school or major are not selected
       return;
     }
 
     try {
-      setLoading(true);
-      const filePath = `/data/${school}_${major}.csv`;
-      console.log("Fetching file from:", filePath);
+      setLoading(true); // Start loading state
+      const filePath = `/data/${school}_${major}.csv`; // Construct file path based on school and major
+      console.log("Fetching file from:", filePath); // Log file path for debugging
 
+      // Fetch the CSV data using axios
       const response = await axios.get(filePath);
-      const parsedCourses = parseCSV(response.data);
-      setCourses(parsedCourses);
-      setResponses(new Array(parsedCourses.length).fill({ creditReceived: "No" }));
+      const parsedCourses = parseCSV(response.data); // Parse the CSV data
+      setCourses(parsedCourses); // Set the courses state
+      setResponses(new Array(parsedCourses.length).fill({ creditReceived: "No" })); // Initialize responses with default value
     } catch (error) {
-      console.error("Error fetching courses:", error);
-      alert("Unable to load course data. Please check your selection and try again.");
+      console.error("Error fetching courses:", error); // Log errors for debugging
+      alert("Unable to load course data. Please check your selection and try again."); // Alert user if there's an error
     } finally {
-      setLoading(false);
+      setLoading(false); // End loading state
     }
   };
 
-  const parseCSV = (csvData) => {
-    const parsed = parse(csvData, {
-      header: true,
-      skipEmptyLines: true,
-      dynamicTyping: true,
-    });
+// Function to parse CSV data using the 'papaparse' library
+const parseCSV = (csvData) => {
+  const parsed = parse(csvData, {
+    header: true, // Use the first row as header
+    skipEmptyLines: true, // Skip any empty lines
+    dynamicTyping: true, // Automatically convert data types (e.g., string to number)
+  });
 
-    if (parsed.errors.length > 0) {
-      console.error("CSV parsing errors:", parsed.errors);
-    }
+  if (parsed.errors.length > 0) {
+    console.error("CSV parsing errors:", parsed.errors); // Log CSV parsing errors for debugging
+  }
 
-    return parsed.data.map((row) => ({
-      courseName: row["CourseName"] || "Unknown Course",
-      courseNumber: row["CourseNumber"] || "N/A",
-      credits: row["Credits"] || 0,
-      prerequisite: row["Prerequisite"] || "None",
-    }));
-  };
+  // Map CSV rows into a structured array of course objects
+  return parsed.data.map((row) => ({
+    courseName: row["CourseName"] || "Unknown Course", // Default value if column is missing
+    courseNumber: row["CourseNumber"] || "N/A", // Default value if column is missing
+    credits: row["Credits"] || 0, // Default value if column is missing
+    prerequisite: row["Prerequisite"] || "None", // Default value if column is missing
+  }));
+};
 
-  const handleCreditReceivedChange = (index, value) => {
-    const newResponses = [...responses];
-    newResponses[index] = { ...newResponses[index], creditReceived: value };
-    setResponses(newResponses);
-  };
+// Function to handle changes in the "Credit Received?" dropdown
+const handleCreditReceivedChange = (index, value) => {
+  const newResponses = [...responses]; // Copy current responses array
+  newResponses[index] = { ...newResponses[index], creditReceived: value }; // Update the specific response
+  setResponses(newResponses); // Set the updated responses state
+};
 
+// Function to handle form submission and communication with OpenAI API
   const handleSubmit = async () => {
     console.log("Courses loaded:", courses);
     console.log("Is submitted:", isSubmitted);
 
     if (courses.length === 0 || isSubmitted) {
-      alert("Please ensure courses are loaded.");
+      alert("Please ensure courses are loaded."); // Alert if no courses are loaded or already submitted
       return;
     }
 
-    setLoading(true);
+    setLoading(true); // Set loading state before processing
 
+    // Prompt and constraints to GPT-4o
     const userMessage = `Please generate a semester planner in CSV format. 
     Each semester should be a separate CSV block with the columns:
     Course Name, Course Number, Credit Hours, Total Credits Per Semester.
@@ -94,8 +109,9 @@ function SemesterPlanner() {
     MAKE SURE THE CSVs ARE SEPARATED FOR EACH SEMESTER. DO NOT REPEAT ANY CLASSES.
     LOOK AT THE PREREQUISITE. ENSURE THAT THE PREREQUESITE IS IN THE SEMESTER BEFORE IT.
     A PREQUESITE MUST BE TAKEN BEFORE THE CLASS ITSELF.
+
     THE STUDENT ALSO REQUESTS THE FOLLOWING, MUST FOLLOW THESE
-    CONSTRAINTS!!!: ${personalizations}
+    CONSTRAINTS EXACTLY!!!: ${personalizations}
     Here are the courses for: ${courses.map((course, index) =>
       `${course.courseName} (${course.courseNumber}): ${course.credits} credits, 
       Credit received: ${responses[index].creditReceived}`
@@ -103,45 +119,48 @@ function SemesterPlanner() {
 
     const newMessages = [{ sender: "student", text: userMessage }];
     setMessages(newMessages);
-
+    
     try {
+      // Send a request to the OpenAI API to generate a semester planner based on user input
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          model: "gpt-4o",
-          messages: [{ role: "user", content: userMessage }],
-          max_tokens: 4000,
+          model: "gpt-4o", // Specify the GPT model to use
+          messages: [{ role: "user", content: userMessage }], // The input message to the model
+          max_tokens: 4000, // Maximum number of tokens for the response
         },
         {
           headers: {
-            Authorization: `Bearer ${openaiApiKey}`,
-            "Content-Type": "application/json",
+            Authorization: `Bearer ${openaiApiKey}`, // Include the API key for authorization
+            "Content-Type": "application/json", // Content type for the request
           },
-          timeout: 30000,
+          timeout: 30000, // Set a timeout for the request
         }
       );
 
-      const chatGptResponse = {
-        sender: "planner",
-        text: response.data.choices[0].message.content.trim(),
-      };
+    // Process the response from the OpenAI API
+    const chatGptResponse = {
+      sender: "planner",
+      text: response.data.choices[0].message.content.trim(), // Get the content of the AI response
+    };
 
-      setMessages((prevMessages) => [...prevMessages, chatGptResponse]);
-      setSemesterPlan(chatGptResponse.text);
+    setMessages((prevMessages) => [...prevMessages, chatGptResponse]); // Add the response to the messages state
+    setSemesterPlan(chatGptResponse.text); // Set the semester plan based on the response
 
-      parseAndDisplayCSV(chatGptResponse.text);
+    parseAndDisplayCSV(chatGptResponse.text); // Call function to parse and display the CSV data
 
-      setCourses([]);
-      setResponses([]);
-      setIsSubmitted(true); // After submission, hide dropdowns and button
-    } catch (error) {
-      console.error("Error communicating with OpenAI API:", error);
-      alert("There was an error processing your request. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setCourses([]); // Clear the courses state after submission
+    setResponses([]); // Clear the responses state after submission
+    setIsSubmitted(true); // Set the submitted flag to true
+  } catch (error) {
+    console.error("Error communicating with OpenAI API:", error); // Log any errors for debugging
+    alert("There was an error processing your request. Please try again."); // Alert user if there is an error
+  } finally {
+    setLoading(false); // End loading state
+  }
+};
 
+  // Function to parse the CSV text and display the data in a structured format
   const parseAndDisplayCSV = (csvText) => {
     const semesterTables = csvText.split("\n\n").map((semesterText) => {
       const lines = semesterText.split("\n").filter((line) => {
@@ -150,22 +169,25 @@ function SemesterPlanner() {
 
       const rows = lines.map((line) => {
         const [courseName, courseNumber, credits] = line.split(",").map((item) => item.trim());
-        return { courseName, courseNumber, credits: parseInt(credits) };
-      }).filter(row => !isNaN(row.credits));
+        return { courseName, courseNumber, credits: parseInt(credits) }; // Parse course data
+      }).filter(row => !isNaN(row.credits)); // Filter out rows with NaN credits
 
+      // Calculate total credits for the semester and add it as a row
       const totalCredits = rows.reduce((sum, course) => sum + (course.credits || 0), 0);
       rows.push({
         courseName: "Total Credits",
         courseNumber: "",
-        credits: totalCredits
+        credits: totalCredits,
       });
 
-      return { rows };
+      return { rows }; // Return the semester data object
     });
 
-    setSemesterPlan(semesterTables);
+    console.log("Parsed Semester Tables:", semesterTables); // Log parsed data for debugging
+    setSemesterPlan(semesterTables); // Update the semesterPlan state with parsed data
   };
 
+  // Function to handle PDF generation and download
   const handlePrintSchedule = () => {
     const doc = new jsPDF();
   

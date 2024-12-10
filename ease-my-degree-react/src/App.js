@@ -1,4 +1,4 @@
-// src/App.js
+// App.js
 
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -8,7 +8,6 @@ import Dashboard from './Dashboard';
 import GpaCalculator from './GpaCalculator';
 import SemesterPlanner from './SemesterPlanner'; 
 import CareerCounselor from './CareerCounselor';
-import GettingStarted from './GettingStarted';
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
         <Route path="/calculator" element={<GpaCalculator />} />
         <Route path="/semesterplanner" element={<SemesterPlanner />} />
         <Route path="/careercounselor" element={<CareerCounselor />} />
-        <Route path="/gettingstarted" element={<GettingStarted />} />
       </Routes>
     </Router>
   );

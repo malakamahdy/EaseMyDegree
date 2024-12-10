@@ -1,4 +1,5 @@
-// src/Register.js
+// Register.js
+// Handles user's registration/account creation
 
 import React, { useState } from 'react';
 import './Register.css';
