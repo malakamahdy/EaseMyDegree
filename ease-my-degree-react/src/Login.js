@@ -1,4 +1,5 @@
-// src/Login.js
+// Login.js
+// Handles user's login
 
 import React, { useState } from 'react';
 import './Login.css';
