@@ -1,5 +1,7 @@
 # EaseMyDegree - The future of academic planning.
 
+![Screenshot of EaseMyDegree](assets/logo.png)
+
 ## Check it out live!
 The EaseMyDegree site:
 https://easemydegree.web.app/
@@ -71,11 +73,16 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 
 6. **Navigate to `http://localhost:3000`** in your browser to view the app.
 
+## How GPT-4o is integrated
+
+![Screenshot of AI integration chart](assets/AI_integration.png)
+
+
 ## Developer
 - **Malak Mahdy**: Developed EaseMyDegree and degree offerings data sets.
 
 - And thanks to:
-- **Chantey Baca, Antonio Piñon, Jennifer Vasquez**: Contributed course plan data sets
+- **Chantey Baca, Antonio Piñon, Jennifer Vasquez**: Contributed course plan data sets.
 - **Syed Zaidi**: Login and registration functionality.
 
 
