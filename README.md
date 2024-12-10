@@ -116,9 +116,11 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 ## Developer
 - **Malak Mahdy**: Developed EaseMyDegree and degree offerings data sets.
 
-- And thanks to:
+  And thanks to:
 - **Chantey Baca, Antonio Piñon, Jennifer Vasquez**: Contributed course plan data sets.
 - **Syed Zaidi**: Login and registration functionality.
+
+- Logo developed by Antonio Piñon
 
 
 
