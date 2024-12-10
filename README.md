@@ -15,6 +15,12 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 ## Overview
 **EaseMyDegree** is an innovative, easy-to-scale web application built with React.js, Node.js, and OpenAI's GPT-4o, designed to help students create personalized semester-by-semester course plans. It also provides career advice based on the selected school and offers a GPA calculator for tracking academic performance.
 
+## Brief Demo
+
+[Watch the Demo](https://youtu.be/1quS0_Nnh0k)
+
+
+
 ## Features
 - **Personalized Semester Planner**: Generates a semester plan based on user input and course data.
 - **Career Advice**: Offers guidance and suggestions for career paths based on the user's major and school.
