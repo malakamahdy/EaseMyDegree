@@ -17,9 +17,10 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 
 ## Brief Demo
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/1quS0_Nnh0k" 
-frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
+<p align="center">
+  <mov src="assets/EaseMyDegree_demo.mov" alt="Demo of EaseMyDegree" width="800"/>
+</p>
+
 
 
 
