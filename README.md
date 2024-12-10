@@ -13,7 +13,7 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 
 
 ## Overview
-**EaseMyDegree** is an innovative web application built with React.js, Node.js, and OpenAI's GPT-4o, designed to help students create personalized semester-by-semester course plans. It also provides career advice based on the selected school and offers a GPA calculator for tracking academic performance.
+**EaseMyDegree** is an innovative, easy-to-scale web application built with React.js, Node.js, and OpenAI's GPT-4o, designed to help students create personalized semester-by-semester course plans. It also provides career advice based on the selected school and offers a GPA calculator for tracking academic performance.
 
 ## Features
 - **Personalized Semester Planner**: Generates a semester plan based on user input and course data.
@@ -79,6 +79,31 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 
 ![Screenshot of AI integration chart](assets/AI_integration.png)
 
+## Preview
+
+### Dashboard
+<p align="center">
+  <img src="assets/dashboard.png" alt="Dashboard of EaseMyDegree" width="600"/>
+</p>
+
+### Semester Planner
+<p align="center">
+  <img src="assets/semester_planner.png" alt="Semester planner of EaseMyDegree" width="600"/>
+</p>
+
+<p align="center">
+  <img src="assets/semester_results.png" alt="Semester planner of EaseMyDegree" width="600"/>
+</p>
+
+### Career Counselor
+<p align="center">
+  <img src="assets/career_counselor.png" alt="Career counselor of EaseMyDegree" width="600"/>
+</p>
+
+### GPA Calculator
+<p align="center">
+  <img src="assets/GPA_calculator.png" alt="GPA Calculator of EaseMyDegree" width="600"/>
+</p>
 
 ## Developer
 - **Malak Mahdy**: Developed EaseMyDegree and degree offerings data sets.
