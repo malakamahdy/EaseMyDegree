@@ -18,12 +18,10 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 ## Brief Demo
 
 <p align="center">
-  <video src="assets/EaseMyDegree_demo.mov" alt="Demo of EaseMyDegree" width="800"/>
+  <a href="https://youtu.be/1quS0_Nnh0k" target="_blank">
+    <img src="https://img.youtube.com/vi/1quS0_Nnh0k/0.jpg" alt="Demo of EaseMyDegree" width="800"/>
+  </a>
 </p>
-
-
-
-
 
 ## Features
 - **Personalized Semester Planner**: Generates a semester plan based on user input and course data.
