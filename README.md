@@ -18,7 +18,7 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 ## Brief Demo
 
 <p align="center">
-  <mov src="assets/EaseMyDegree_demo.mov" alt="Demo of EaseMyDegree" width="800"/>
+  <video src="assets/EaseMyDegree_demo.mov" alt="Demo of EaseMyDegree" width="800"/>
 </p>
 
 
