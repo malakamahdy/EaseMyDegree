@@ -19,7 +19,15 @@ function CareerCounselor() {
   const model = "gpt-4o"; 
   const maxTokens = 1500; 
 
-  const handleSchoolChange = (e) => setSchool(e.target.value);
+  const handleSchoolChange = async (e) => {
+    const selectedSchool = e.target.value;
+    setSchool(selectedSchool);
+    
+    if (selectedSchool) {
+      await fetchDegreeSuggestions(selectedSchool);
+    }
+  };
+  
   const handleMessageChange = (e) => setMessage(e.target.value);
 
   // Function to fetch and parse the CSV file based on the selected school
