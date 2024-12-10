@@ -1,6 +1,8 @@
 # EaseMyDegree - The future of academic planning.
 
-![Screenshot of EaseMyDegree](assets/logo.png)
+<p align="center">
+  <img src="assets/logo.png" alt="Logo of EaseMyDegree" width="600"/>
+</p>
 
 ## Check it out live!
 The EaseMyDegree site:
