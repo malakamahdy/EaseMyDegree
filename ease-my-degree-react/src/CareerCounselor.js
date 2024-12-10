@@ -94,17 +94,16 @@ function CareerCounselor() {
     ${structuredDegreeList}
   
     When responding to the student's query, only suggest minors or programs found in the above list. If the student mentions a minor or program not listed,
-    
     politely explain that it is not available at ${school}. 
   
     Do not assume or suggest anything outside this list. Every response must strictly follow ${school}'s offerings.
-    
+  
     NEVER TELL THE STUDENT YOU DONT KNOW WHAT DEGREES THERE ARE, OR ASK FOR A LIST. NEVER GIVE THE IMPRESSION
-    
+  
     THAT YOU DO NOT HAVE INFO ON THE MINORS OR PROGRAMS, OR THAT YOU ARE WAITING FOR THE STUDENT TO GIVE YOU ONE.
-    
+  
     YOU HAVE THE LIST!!!`;
-    
+  
     try {
       const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
@@ -148,11 +147,8 @@ function CareerCounselor() {
       setLoading(false);
     }
   };
-  
-  
-  
-  
     
+
   
   return (
     <div className="career-counselor">
