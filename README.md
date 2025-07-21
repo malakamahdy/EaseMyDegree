@@ -113,16 +113,12 @@ https://sites.google.com/view/easemydegree/home?authuser=0
   <img src="assets/GPA_calculator.png" alt="GPA Calculator of EaseMyDegree" width="600"/>
 </p>
 
-## Developer
-- **Malak Mahdy**: Developed EaseMyDegree and degree offerings data sets.
+---
 
-
-
-## Contact
+**Developed by Malak Mahdy — mmahdy@islander.tamucc.edu**
 For questions or feedback, please contact malakmahdy@gmail.com.
 
-- Thanks to Chantey Baca, Antonio Piñon, Jennifer Vasquez, for contributing course plan data sets, and the logo.
-
 ---
+> *Thanks to Chantey Baca, Antonio Piñon, Jennifer Vasquez, for contributing course plan data sets, and the logo.*
 
 **EaseMyDegree** is designed to empower students with smart, personalized educational planning tools. Enjoy planning your semesters with ease and confidence!
