@@ -116,7 +116,6 @@ https://sites.google.com/view/easemydegree/home?authuser=0
 ---
 
 **Developed by Malak Mahdy — mmahdy@islander.tamucc.edu**
-For questions or feedback, please contact malakmahdy@gmail.com.
 
 ---
 > *Thanks to Chantey Baca, Antonio Piñon, Jennifer Vasquez, for contributing course plan data sets, and the logo.*
